@@ -37,7 +37,7 @@ function on_num(bool, target) {
   } else {
     data[prevOrcurr] += val;
   }
-  $display.textContent = data[prevOrcurr];
+  $answer.textContent = data[prevOrcurr];
 }
 function on_op(target) {
   $steps.classList.remove("off");
@@ -60,7 +60,7 @@ function show_result() {
   data.pressdResult = true;
   show_finalStep();
   data.prev = calculSwitch();
-  $display.textContent = data.prev;
+  $answer.textContent = data.prev;
 }
 function calculSwitch() {
   const { prev, curr, operator } = data;
@@ -73,6 +73,8 @@ function calculSwitch() {
       return Number(prev) * Number(curr);
     case "/":
       return Number(prev) / Number(curr);
+    case "**":
+      return Number(prev) ** Number(curr);
   }
 }
 function operator_to_string() {
@@ -86,6 +88,8 @@ function operator_to_string() {
       return "×";
     case "/":
       return "÷";
+    case "**":
+      return "**";
   }
 }
 function show_middleStep() {
@@ -101,7 +105,7 @@ function reset_data() {
   data.curr = "";
   $steps.textContent = "&nbsp";
   $steps.classList.add("off");
-  $display.textContent = "0";
+  $answer.textContent = "0";
   data.operator = undefined;
   data.pressdResult = true;
 }
