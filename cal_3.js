@@ -1,6 +1,8 @@
-const steps = document.querySelector("#steps");
-const answer = document.querySelector("#answer");
-const btn = document.querySelector("#btn");
+const steps = document.getElementById("steps");
+const answer = document.getElementById("answer");
+const btn = document.getElementById("btn");
+const dot = document.getElementById("dot");
+const zero = document.getElementById("zero")
 // const plusMinus = document.querySelector(".plusMinus")
 
 const data = {
@@ -9,7 +11,6 @@ const data = {
   operator: undefined,
   pressedResult: false,
 };
-
 btn.addEventListener("click", (e) => {
   const target = e.target;
   if (target.id === "reset") {
@@ -29,19 +30,32 @@ btn.addEventListener("click", (e) => {
 function onNum(bool, target) {
   const val = target.value;
   const prevOrCurr = bool ? "curr" : "prev";
-  if (data[prevOrCurr] === -0){
-    console.log("hi")
-    answer.innerText = data[prevOrCurr];
+  // . 여러개 써지는거
+  if(answer.innerText.indexOf(".") !== -1){
+    dot.disabled = true;
+  }else{
+    dot.disabled = false;
   }
+  // if (data[prevOrCurr] === -0){
+  //   console.log("hi")
+  //   answer.innerText = data[prevOrCurr];
+  // }
   if (val === "-1") {
-    // console.log(typeof data[prevOrCurr])
     data[prevOrCurr] = Number(data[prevOrCurr]) * -1;
-    console.log("bye")
-
   } else {
     data[prevOrCurr] += val;
   }
+  // if (data[prevOrCurr] === -0){
+  //     console.log(data[prevOrCurr])
+  //     answer.innerText = data[prevOrCurr];
+  // }
   answer.innerText = data[prevOrCurr];
+  // 0 처음에 여러개 써지는거
+  if (answer.innerText === "0") {
+    zero.disabled = true;
+  } else {
+    zero.disabled = false;
+  }
 }
 function onOp(target) {
   steps.classList.remove("off");
