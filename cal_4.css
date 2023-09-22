@@ -40,9 +40,9 @@ body {
   color: grey;
   font-size: 15px;
 }
-#steps.off {
+/* #steps.off {
   opacity: 0;
-}
+} */
 #answer {
   font-size: 27px;
   white-space: normal;
