@@ -1,8 +1,9 @@
 const steps = document.getElementById("steps");
+//steps >> processCalculation ..
 const answer = document.getElementById("answer");
 const btn = document.getElementById("btn");
 const dot = document.getElementById("dot");
-const zero = document.getElementById("zero")
+const zero = document.getElementById("zero");
 // const plusMinus = document.querySelector(".plusMinus")
 
 const data = {
@@ -12,6 +13,7 @@ const data = {
   pressedResult: false,
 };
 btn.addEventListener("click", (e) => {
+  // const id = target.id 등 중복 이름들 바꾸기
   const target = e.target;
   if (target.id === "reset") {
     resetData();
@@ -31,24 +33,18 @@ function onNum(bool, target) {
   const val = target.value;
   const prevOrCurr = bool ? "curr" : "prev";
   // . 여러개 써지는거
-  if(answer.innerText.indexOf(".") !== -1){
+  if (answer.innerText.indexOf(".") !== -1) {
     dot.disabled = true;
-  }else{
+  } else {
     dot.disabled = false;
   }
-  // if (data[prevOrCurr] === -0){
-  //   console.log("hi")
-  //   answer.innerText = data[prevOrCurr];
-  // }
+  // >> 위에 식 dot.disabled = answer.innerText.indexOf(".") !== -1
+  // if문 간결화 찾아보기
   if (val === "-1") {
     data[prevOrCurr] = Number(data[prevOrCurr]) * -1;
   } else {
     data[prevOrCurr] += val;
   }
-  // if (data[prevOrCurr] === -0){
-  //     console.log(data[prevOrCurr])
-  //     answer.innerText = data[prevOrCurr];
-  // }
   answer.innerText = data[prevOrCurr];
   // 0 처음에 여러개 써지는거
   if (answer.innerText === "0") {

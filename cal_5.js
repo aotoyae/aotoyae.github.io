@@ -57,20 +57,24 @@ function addOp(key) {
     steps.innerText = steps.innerText + answer.innerText + key;
   }
 }
-
+// getEx > getExpression 등
 function getEx() {
   return steps.innerText + answer.innerText;
 }
 
 function calculate(ex) {
+  // [1, "+", 2, "-", 3]
+  // > [1, 2, 3]
   let tmpNums = ex.split(/÷|×|－|＋/);
   let tmpResult = [];
   let count = 0;
   const lengthNums = tmpNums.length;
   const lengthOps = lengthNums - 1;
-  let lengthTmp = ex.length;
+  // let lengthTmp = ex.length; 안쓰는거 지우고
   let countOp = 0;
   let tmp = 0;
+  // tmp랑 cointOp 밑에 식마다 바꿔주기, 같은 함수명 돌려쓰는거 안좋음
+  // tmpDivide 이런식으로 divideOp ..
 
   for (let i = 0; i < lengthNums; i++) {
     tmpResult[2 * i] = Number(tmpNums[i]);
@@ -86,10 +90,15 @@ function calculate(ex) {
   }
   for (let i = 0; i < lengthOps; i++) {
     countOp = tmpResult.indexOf("÷");
+    // [1, "+", 2, "-", 3, "*", 4, "÷", 5]
+    // countOp = 7
     if (countOp !== -1) {
       tmp = tmpResult[countOp - 1] / tmpResult[countOp + 1];
+      // tmp = 4 / 5
       tmpResult[countOp - 1] = tmp;
+      // tmpResult[6] = 0.8
       tmpResult.splice(countOp, 2);
+      // [1, "+", 2, "-", 3, "*", 0.8]
     }
     countOp = tmpResult.indexOf("×");
     if (countOp !== -1) {
@@ -110,6 +119,7 @@ function calculate(ex) {
       tmpResult.splice(countOp, 2);
     }
   }
+  // [] 하나만 남음 마지막에
   answer.innerText = tmpResult[0];
 }
 
@@ -146,6 +156,7 @@ function executeFnc(key) {
     case "＋":
       addOp(key);
       checkOp = 1;
+      // checkOp 이렇게 전역변수 값이 자꾸 바뀌는거 안좋음
       break;
     case "＝":
       // -2 = 실행했을 때 NaN 나오는거 해결

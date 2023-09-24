@@ -6,6 +6,7 @@ const btn = document.getElementById("btn");
 let check = 0;
 
 function printNum(target) {
+  z;
   if (check === 1) {
     check = 0;
     answer.innerText = "0";
