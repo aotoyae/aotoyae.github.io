@@ -26,18 +26,22 @@ function changeSign() {
     answer.innerText = "-" + answer.innerText;
   }
 }
+
 function addDot() {
   if (answer.innerText.indexOf(".") === -1) {
     answer.innerText = answer.innerText + ".";
   }
 }
+
 function square() {
   answer.innerText = answer.innerText * answer.innerText;
 }
+
 function clear() {
   answer.innerText = "0";
   steps.innerText = "0";
 }
+
 function addOp(key) {
   if (checkOp === 1) {
     if (steps.innerText === "0") {
@@ -51,12 +55,13 @@ function addOp(key) {
     steps.innerText = steps.innerText + answer.innerText + key;
   }
 }
-function getExpression() {
+
+function getResult() {
   return steps.innerText + answer.innerText;
 }
 
-function calculate(ex) {
-  let tmpNums = ex.split(/÷|×|－|＋/);
+function calculate(expression) {
+  let tmpNums = expression.split(/÷|×|－|＋/);
   let tmpResult = [];
   let count = 0;
   const lengthNums = tmpNums.length;
@@ -66,21 +71,27 @@ function calculate(ex) {
     tmpResult[2 * i] = Number(tmpNums[i]);
   }
   for (i = 0; i < lengthOps; i++) {
-    for (j = count; j < ex.length; j++) {
-      if (ex[j] === "÷" || ex[j] === "×" || ex[j] === "－" || ex[j] === "＋") {
-        tmpResult[2 * i + 1] = ex[j];
+    for (j = count; j < expression.length; j++) {
+      if (
+        expression[j] === "÷" ||
+        expression[j] === "×" ||
+        expression[j] === "－" ||
+        expression[j] === "＋"
+      ) {
+        tmpResult[2 * i + 1] = expression[j];
         count = j + 1;
         break;
       }
     }
   }
+
   for (let i = 0; i < lengthOps; i++) {
-    const divdeOp = tmpResult.indexOf("÷");
-    if (divdeOp !== -1) {
+    const divideOp = tmpResult.indexOf("÷");
+    if (divideOp !== -1) {
       let tmpDivide = 0;
-      tmpDivide = tmpResult[divdeOp - 1] / tmpResult[divdeOp + 1];
-      tmpResult[divdeOp - 1] = tmpDivide;
-      tmpResult.splice(divdeOp, 2);
+      tmpDivide = tmpResult[divideOp - 1] / tmpResult[divideOp + 1];
+      tmpResult[divideOp - 1] = tmpDivide;
+      tmpResult.splice(divideOp, 2);
     }
     const multiOp = tmpResult.indexOf("×");
     if (multiOp !== -1) {
@@ -145,9 +156,8 @@ function executeFnc(key) {
       checkOp = 1;
       break;
     case "＝":
-      const answerArr = answer.innerText.split("");
-      let ex = getExpression();
-      calculate(ex);
+      let expression = getResult();
+      calculate(expression);
       steps.innerText = "0";
       break;
   }
