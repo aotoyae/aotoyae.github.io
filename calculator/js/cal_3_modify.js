@@ -45,15 +45,16 @@ function clear() {
 function addOp(key) {
   if (checkOp === 1) {
     if (steps.innerText === "0") {
-      steps.innerText = answer.innerText + key;
+      steps.innerText = answer.innerText;
     } else {
-      steps.innerText = steps.innerText.slice(0, -1) + key;
+      steps.innerText = steps.innerText.slice(0, -1);
     }
   } else if (steps.innerText === "0") {
-    steps.innerText = answer.innerText + key;
+    steps.innerText = answer.innerText;
   } else {
-    steps.innerText = steps.innerText + answer.innerText + key;
+    steps.innerText = steps.innerText + answer.innerText;
   }
+  steps.innerText += key;
 }
 
 function getResult() {
@@ -116,8 +117,8 @@ function calculate(expression) {
     }
   }
   answer.innerText = tmpResult[0];
-  if (isNaN(tmpResult[0])) {
-    answer.innerText = "0";
+  if (isNaN(tmpResult[0]) || answer.innerText === "Infinity") {
+    answer.innerText = "(정의되지 않은 값입니다)";
   }
 }
 
