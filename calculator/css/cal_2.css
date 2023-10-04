@@ -52,7 +52,6 @@ body {
   margin: 90px 20px 20px 25px;
   width: 360px;
   height: 400px;
-  /* background: yellow; */
 }
 button {
   float: left;
@@ -79,7 +78,6 @@ button:active {
   box-shadow: 0 4px 0 3px grey;
 }
 #footer {
-  /* margin-top: 16px; */
   font-size: 15px;
   font-weight: bold;
   text-align: center;
