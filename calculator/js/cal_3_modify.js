@@ -158,7 +158,6 @@ function executeFnc(key) {
       steps.innerText = "0";
       break;
   }
-  console.log(key);
 }
 
 function getKey(event) {
