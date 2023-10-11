@@ -1,4 +1,4 @@
-const btn = document.getElementById("btn");
+const btn = document.getElementsByClassName("button");
 const steps = document.getElementById("steps");
 const answer = document.getElementById("answer");
 let checkOp = 0;
@@ -131,7 +131,6 @@ function executeFnc(key) {
     case "5":
     case "4":
     case "3":
-    case "2":
     case "1":
     case "0":
       printNum(key);
@@ -141,9 +140,6 @@ function executeFnc(key) {
       break;
     case ".":
       addDot();
-      break;
-    case "×<sup>2</sup>":
-      square();
       break;
     case "C":
       clear();
@@ -162,6 +158,7 @@ function executeFnc(key) {
       steps.innerText = "0";
       break;
   }
+  console.log(key);
 }
 
 function getKey(event) {
@@ -169,6 +166,8 @@ function getKey(event) {
   executeFnc(key);
 }
 
-if (btn) {
-  let key = btn.addEventListener("click", getKey);
+if (btn.length > 0) {
+  for (i = 0; i < btn.length; i++) {
+    btn[i].addEventListener("click", getKey);
+  }
 }
