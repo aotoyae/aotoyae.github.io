@@ -10,6 +10,30 @@ function handleSubmitId(event) {
   event.preventDefault();
   const id = idBox[0].value;
   const password = passBox[0].value;
+
+  let idRule = /^[a-z0-9]{5,20}$/;
+  let passRule = /^[a-zA-Z0-9]{8,20}$/;
+  if (id === "") {
+    alert(`아이디를 입력하세요.`);
+    return false;
+  } else if (!idRule.test(id)) {
+    alert(`5~20자의 영문 소문자, 숫자만 사용 가능합니다.`);
+    return false();
+  }
+  if (password === "") {
+    alert(`비밀번호를 입력하세요.`);
+    return false;
+  } else if (!passRule.test(password)) {
+    alert(`8~20자의 영문 대소문자, 숫자만 사용 가능합니다.`);
+    return false;
+  }
+  for (i = 0; i < users.length; i++) {
+    if (users !== "") console.log(users[i].id);
+    if (id === users[i].id) {
+      alert(`사용할 수 없는 아이디입니다. 다른 아이디를 입력해 주세요.`);
+      return false;
+    }
+  }
   users.push({ id: id, password: password });
   localStorage.setItem("users", JSON.stringify(users));
   alert(`${id}님 회원가입을 환영합니다.`);
@@ -19,13 +43,24 @@ function checkValue(event) {
   event.preventDefault();
   const id = idBox[0].value;
   const password = passBox[0].value;
+  if (id === "") {
+    alert(`아이디를 입력하세요.`);
+    return false;
+  }
+  if (password === "") {
+    alert(`비밀번호를 입력하세요.`);
+    return false;
+  }
   for (i = 0; i < users.length; i++) {
-    if (users[i].id == id && users[i].password == password) {
+    if (users[i].id !== id || users[i].password !== password) {
+      continue;
+    } else if (users[i].id == id && users[i].password == password) {
       alert(`${id}님 반갑습니다.`);
       window.location.href = "sub.html";
-    } else {
-      alert(`아이디 또는 비밀번호를 잘못 입력했습니다.`);
     }
+    // else if (users[i].id !== id && users[i].password !== password) {
+    //   alert(`아이디 또는 비밀번호를 잘못 입력했습니다.`);
+    // }
   }
 }
 
