@@ -79,7 +79,7 @@
 
 #list-box {
   width: 80vw;
-  padding-top: 30px;
+  padding-top: 10px;
 }
 
 #list-title h2 {
@@ -88,8 +88,23 @@
 }
 #list {
   width: 80vw;
-  height: 60vh;
-  background-color: lightgoldenrodyellow;
+  height: 70vh;
+  /* background-color: lightgoldenrodyellow; */
+}
+#container tr td {
+  width: 10vw;
+  height: 6vh;
+  text-align: center;
+  color: #1d377d;
+  border-bottom: 1px solid #1d377d;
+}
+#content tr td {
+  width: 10vw;
+  height: 6vh;
+  border-bottom: 1px solid #f1f1f1;
+}
+#content tr :nth-child(1) {
+  font-weight: 400;
 }
 #page-number {
   text-align: center;
