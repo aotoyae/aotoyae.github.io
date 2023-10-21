@@ -13,6 +13,7 @@ function handleSubmitId(event) {
 
   const idRule = /^[a-z0-9]{5,20}$/;
   const passRule = /^[a-zA-Z0-9]{8,20}$/;
+  // 하나만 포함되면 넘어감, 전부 다 검사하도록 바꿔야함
 
   if (id === "") {
     alert(`아이디를 입력하세요.`);
@@ -25,7 +26,7 @@ function handleSubmitId(event) {
     alert(`비밀번호를 입력하세요.`);
     return false;
   } else if (!passRule.test(password)) {
-    alert(`비밀번호: 8~20자의 영문 대소문자, 숫자만 사용 가능합니다.`); // 대문자 실행 안됨
+    alert(`비밀번호: 8~20자의 영문 대소문자, 숫자만 사용 가능합니다.`);
     return false;
   }
   for (i = 0; i < users.length; i++) {
@@ -57,17 +58,14 @@ function checkValue(event) {
     } else if (users[i].id == id && users[i].password == password) {
       alert(`${id}님 반갑습니다.`);
       // window.location.href = "sub.html";
-    } else {
-      alert(`아이디 또는 비밀번호를 잘못 입력했습니다.`);
     }
   }
-  console.log(users);
-  // const strUsers = JSON.stringify(users);
-  // console.log(strUsers);
-  const testDuplicate = new Set(users.map(JSON.stringify));
-  console.log(testDuplicate);
-  const isDuplicate = testDuplicate.size < users.length;
-  console.log(isDuplicate);
+  if (
+    users.some((obj) => obj.id == id) === false ||
+    users.some((obj) => obj.password == password) === false
+  ) {
+    alert(`아이디 또는 비밀번호를 잘못 입력했습니다.`);
+  }
 }
 
 joinBtn[0].addEventListener("click", handleSubmitId);
