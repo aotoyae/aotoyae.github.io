@@ -30,14 +30,14 @@ function paging(page) {
                       </tr>`;
       });
     })
-    .catch(
-      (error) =>
-        (document.querySelector("#content").innerHTML += `
+    .catch((error) => {
+      console.log(error);
+      document.querySelector("#content").innerHTML += `
               <tr>
                   <td colspan="4">Error occurred.</td>
               </tr>   
-            `)
-    );
+            `;
+    });
 }
 function getPage(event) {
   content.innerHTML = "";
