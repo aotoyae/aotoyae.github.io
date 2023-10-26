@@ -30,8 +30,8 @@ function handleSubmitId(event) {
     return false;
   }
 
-  for (let i = 0; i < users.length; i++) {
-    if (id === users[i].id) {
+  for (const element of users) {
+    if (id === element.id) {
       alert(`사용할 수 없는 아이디입니다. 다른 아이디를 입력해 주세요.`);
       return false;
     }
@@ -57,7 +57,7 @@ function checkValue(event) {
     return false;
   }
 
-  for (let i = 0; i < users.length; i++) {
+  for (const element of users) {
     if (users[i].id === id && users[i].password === password) {
       alert(`${id}님 반갑습니다.`);
       // window.location.href = "sub.html";
