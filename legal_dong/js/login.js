@@ -6,27 +6,40 @@ const loginBtn = document.getElementsByClassName("login-btn");
 localStorage.setItem("users", JSON.stringify([]));
 const users = JSON.parse(localStorage.getItem("users"));
 
-function handleSubmitId(event) {
+function validation() {}
+
+function joinMembership(event) {
   event.preventDefault();
   const id = idBox[0].value;
   const password = passBox[0].value;
-  const idRule = /^[a-z0-9]{5,20}$/;
-  const passRule = /^[a-zA-Z0-9]{8,20}$/;
-  // 하나만 포함되면 넘어감, 전부 다 검사하도록 바꿔야함
+  const numRule = /[0-9]/;
+  const lowerRule = /[a-z]/;
+  const upperRule = /[A-Z]/;
 
   if (id === "") {
     alert(`아이디를 입력하세요.`);
     return false;
-  } else if (!idRule.test(id)) {
-    alert(`아이디: 5~20자의 영문 소문자, 숫자만 사용 가능합니다.`);
+  } else if (
+    !numRule.test(id) ||
+    !lowerRule.test(id) ||
+    20 < id.length ||
+    id.length < 5
+  ) {
+    alert(`아이디: 5~20자의 영문 소문자, 숫자를 입력해 주세요.`);
     return false;
   }
 
   if (password === "") {
     alert(`비밀번호를 입력하세요.`);
     return false;
-  } else if (!passRule.test(password)) {
-    alert(`비밀번호: 8~20자의 영문 대소문자, 숫자만 사용 가능합니다.`);
+  } else if (
+    !numRule.test(password) ||
+    !lowerRule.test(password) ||
+    !upperRule.test(password) ||
+    20 < password.length ||
+    password.length < 8
+  ) {
+    alert(`비밀번호: 8~20자의 영문 대소문자, 숫자를 입력해 주세요.`);
     return false;
   }
 
@@ -46,22 +59,40 @@ function checkValue(event) {
   event.preventDefault();
   const id = idBox[0].value;
   const password = passBox[0].value;
+  const numRule = /[0-9]/;
+  const lowerRule = /[a-z]/;
+  const upperRule = /[A-Z]/;
 
   if (id === "") {
     alert(`아이디를 입력하세요.`);
+    return false;
+  } else if (
+    !numRule.test(id) ||
+    !lowerRule.test(id) ||
+    20 < id.length ||
+    id.length < 5
+  ) {
+    alert(`아이디: 5~20자의 영문 소문자, 숫자를 입력해 주세요.`);
     return false;
   }
 
   if (password === "") {
     alert(`비밀번호를 입력하세요.`);
     return false;
+  } else if (
+    !numRule.test(password) ||
+    !lowerRule.test(password) ||
+    !upperRule.test(password) ||
+    20 < password.length ||
+    password.length < 8
+  ) {
+    alert(`비밀번호: 8~20자의 영문 대소문자, 숫자를 입력해 주세요.`);
+    return false;
   }
 
-  for (const element of users) {
-    if (users[i].id === id && users[i].password === password) {
-      alert(`${id}님 반갑습니다.`);
-      // window.location.href = "sub.html";
-    }
+  if (users.length === 0) {
+    alert(`회원가입을 진행해 주세요.`);
+    return false;
   }
 
   if (
@@ -70,7 +101,14 @@ function checkValue(event) {
   ) {
     alert(`아이디 또는 비밀번호를 잘못 입력했습니다.`);
   }
+
+  for (i = 0; i < users.length; i++) {
+    if (users[i].id === id && users[i].password === password) {
+      alert(`${id}님 반갑습니다.`);
+      window.location.href = "sub.html";
+    }
+  }
 }
 
-joinBtn[0].addEventListener("click", handleSubmitId);
+joinBtn[0].addEventListener("click", joinMembership);
 loginBtn[0].addEventListener("click", checkValue);
