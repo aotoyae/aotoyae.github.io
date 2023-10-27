@@ -1,11 +1,14 @@
 const container = document.querySelector("#container");
 const content = document.querySelector("#content");
-const pageNum = document.querySelectorAll("#page-number a");
-console.log(pageNum);
-
+const pageList = document.querySelectorAll("#page-list a");
+const pageNumber = document.querySelectorAll("#page-list .num");
+const nextBtn = document.querySelector(".next");
+const prevBtn = document.querySelector(".prev");
 const key = api.key;
 
-const num = 4793;
+const totalcount = 47922;
+const limit = 10;
+const totalPage = Math.ceil(totalcount / limit);
 
 function paging(page) {
   fetch(
@@ -14,7 +17,6 @@ function paging(page) {
     .then((response) => response.json())
     .then((json) => {
       let dongData = json.data;
-      console.log(dongData);
       dongData.forEach((ele) => {
         content.innerHTML += `
                       <tr>
@@ -43,11 +45,26 @@ function getPage(event) {
   content.innerHTML = "";
   let page = event.target.innerHTML;
   paging(page);
-  console.log(page);
 }
 
-if (pageNum.length > 0) {
-  for (i = 0; i < pageNum.length; i++) {
-    pageNum[i].addEventListener("click", getPage);
+if (pageList.length > 0) {
+  for (i = 0; i < pageList.length; i++) {
+    pageList[i].addEventListener("click", getPage);
   }
 }
+
+function nextPage() {
+  for (i = 0; i < 10; i++) {
+    pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) + 10;
+  }
+}
+function prevPage() {
+  if (Number(pageNumber[0].innerHTML) !== 1) {
+    for (i = 0; i < 10; i++) {
+      pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) - 10;
+    }
+  }
+}
+
+nextBtn.addEventListener("click", nextPage);
+prevBtn.addEventListener("click", prevPage);
