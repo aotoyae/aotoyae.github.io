@@ -6,19 +6,23 @@ const key = api.key;
 const url = `https://api.odcloud.kr/api/15063424/v1/uddi:257e1510-0eeb-44de-8883-8295c94dadf7?page=1&perPage=10&&serviceKey=${key}`;
 let pageListNum = 1;
 
-// 초기 데이터 함수
-fetch(url)
-  .then((response) => response.json())
-  .then((json) => {
-    displayJson(json);
-    // console.log(json.currentCount);
-    // console.log(json.totalCount);
-    // console.log(json.page);
-    // console.log(json.perPage);
-  })
-  .catch((error) => {
-    catchError(error);
-  });
+// 처음 페이지로 이동하는 함수
+function firstPage() {
+  fetch(url)
+    .then((response) => response.json())
+    .then((json) => {
+      displayJson(json);
+      // console.log(json.currentCount);
+      // console.log(json.totalCount);
+      // console.log(json.page);
+      // console.log(json.perPage);
+    })
+    .catch((error) => {
+      catchError(error);
+    });
+}
+
+firstPage();
 
 // 법정동 리스트 가져와 보여주는 함수
 function displayJson(json) {
@@ -91,24 +95,45 @@ function prevPage(pageListNum) {
     });
 }
 
+// 마지막 페이지로 이동하는 함수
+function lastPage() {
+  fetch(
+    `https://api.odcloud.kr/api/15063424/v1/uddi:257e1510-0eeb-44de-8883-8295c94dadf7?page=4793&perPage=10&&serviceKey=${key}`
+  )
+    .then((response) => response.json())
+    .then((json) => {
+      displayJson(json);
+    })
+    .catch((error) => {
+      catchError(error);
+    });
+}
+
 // 각 페이지 이동 함수를 실행하는 함수
 function getPage(event) {
   content.innerHTML = "";
   let page = event.target.innerHTML;
+
   if (page === `&gt;`) {
     pageListNum += 10;
-    console.log(pageListNum);
     for (i = 0; i < 10; i++) {
       pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) + 10;
     }
     nextPage(pageListNum);
   } else if (page === `&lt;` && Number(pageNumber[0].innerHTML) !== 1) {
     pageListNum -= 10;
-    console.log(pageListNum);
     for (i = 0; i < 10; i++) {
       pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) - 10;
     }
     prevPage(pageListNum);
+  } else if (page === `처음으로`) {
+    for (i = 0; i < 10; i++) {
+      pageNumber[i].innerHTML = 1;
+      pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) + i;
+    }
+    firstPage();
+  } else if (page === `마지막으로`) {
+    lastPage();
   } else {
     pagingNum(page);
   }
