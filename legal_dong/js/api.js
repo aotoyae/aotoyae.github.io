@@ -2,6 +2,8 @@ const container = document.querySelector("#container");
 const content = document.querySelector("#content");
 const pageList = document.querySelectorAll("#page-list a");
 const pageNumber = document.querySelectorAll("#page-list .num");
+const searchBox = document.getElementById("search");
+const searchBtn = document.getElementById("search-btn");
 const key = api.key;
 const url = `https://api.odcloud.kr/api/15063424/v1/uddi:257e1510-0eeb-44de-8883-8295c94dadf7?page=1&perPage=10&&serviceKey=${key}`;
 let pageListNum = 1;
@@ -139,8 +141,14 @@ function getPage(event) {
   }
 }
 
+function search() {
+  console.log(searchBox.value);
+}
+
 if (pageList.length > 0) {
   for (i = 0; i < pageList.length; i++) {
     pageList[i].addEventListener("click", getPage);
   }
 }
+
+searchBtn.addEventListener("click", search);
