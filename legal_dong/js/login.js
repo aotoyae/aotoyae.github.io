@@ -43,8 +43,8 @@ function joinMembership(event) {
     return false;
   }
 
-  for (const element of users) {
-    if (id === element.id) {
+  for (const user of users) {
+    if (id === user.id) {
       alert(`사용할 수 없는 아이디입니다. 다른 아이디를 입력해 주세요.`);
       return false;
     }
