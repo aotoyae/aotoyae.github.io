@@ -86,7 +86,7 @@
   font-size: 70px;
   font-weight: 100;
 }
-.search {
+#search {
   float: right;
   width: 200px;
   height: 30px;
