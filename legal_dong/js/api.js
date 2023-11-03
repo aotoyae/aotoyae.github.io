@@ -1,4 +1,3 @@
-const container = document.querySelector("#container");
 const content = document.querySelector("#content");
 const pageList = document.querySelectorAll("#page-list a");
 const pageNumber = document.querySelectorAll("#page-list .num");
