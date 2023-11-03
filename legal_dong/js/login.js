@@ -2,19 +2,17 @@ const idBox = document.getElementsByClassName("user-id");
 const passBox = document.getElementsByClassName("user-pass");
 const joinBtn = document.getElementsByClassName("join-btn");
 const loginBtn = document.getElementsByClassName("login-btn");
+const numRule = /[0-9]/;
+const lowerRule = /[a-z]/;
+const upperRule = /[A-Z]/;
 
 localStorage.setItem("users", JSON.stringify([]));
 const users = JSON.parse(localStorage.getItem("users"));
-
-function validation() {}
 
 function joinMembership(event) {
   event.preventDefault();
   const id = idBox[0].value;
   const password = passBox[0].value;
-  const numRule = /[0-9]/;
-  const lowerRule = /[a-z]/;
-  const upperRule = /[A-Z]/;
 
   if (id === "") {
     alert(`아이디를 입력하세요.`);
@@ -59,9 +57,6 @@ function checkValue(event) {
   event.preventDefault();
   const id = idBox[0].value;
   const password = passBox[0].value;
-  const numRule = /[0-9]/;
-  const lowerRule = /[a-z]/;
-  const upperRule = /[A-Z]/;
 
   if (id === "") {
     alert(`아이디를 입력하세요.`);
