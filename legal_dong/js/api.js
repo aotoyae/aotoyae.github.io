@@ -117,18 +117,18 @@ function getPage(event) {
 
   if (page === `&gt;`) {
     pageListNum += 10;
-    for (i = 0; i < 10; i++) {
+    for (let i = 0; i < 10; i++) {
       pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) + 10;
     }
     nextPage(pageListNum);
   } else if (page === `&lt;` && Number(pageNumber[0].innerHTML) !== 1) {
     pageListNum -= 10;
-    for (i = 0; i < 10; i++) {
+    for (let i = 0; i < 10; i++) {
       pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) - 10;
     }
     prevPage(pageListNum);
   } else if (page === `처음으로`) {
-    for (i = 0; i < 10; i++) {
+    for (let i = 0; i < 10; i++) {
       pageNumber[i].innerHTML = 1;
       pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) + i;
     }
@@ -145,7 +145,7 @@ function search() {
 }
 
 if (pageList.length > 0) {
-  for (i = 0; i < pageList.length; i++) {
+  for (let i = 0; i < pageList.length; i++) {
     pageList[i].addEventListener("click", getPage);
   }
 }
