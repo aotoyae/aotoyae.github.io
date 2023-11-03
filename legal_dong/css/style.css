@@ -86,11 +86,22 @@
   font-size: 70px;
   font-weight: 100;
 }
-#search {
+#search-part {
   float: right;
+}
+#search {
   width: 200px;
   height: 30px;
   border: 1px solid #1d377d;
+  margin-right: 5px;
+  padding: 5px;
+}
+#search-btn {
+  width: 80px;
+  height: 30px;
+  background: #1d377d;
+  border: none;
+  color: #fff;
 }
 #list {
   clear: both;
