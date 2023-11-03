@@ -13,6 +13,7 @@ function joinMembership(event) {
   event.preventDefault();
   const id = idBox[0].value;
   const password = passBox[0].value;
+  const btoaPassword = btoa(password);
 
   if (id === "") {
     alert(`아이디를 입력하세요.`);
@@ -48,7 +49,7 @@ function joinMembership(event) {
     }
   }
 
-  users.push({ id: id, password: password });
+  users.push({ id: id, password: btoaPassword });
   localStorage.setItem("users", JSON.stringify(users));
   alert(`${id}님 회원가입을 환영합니다.`);
 }
@@ -57,6 +58,7 @@ function checkValue(event) {
   event.preventDefault();
   const id = idBox[0].value;
   const password = passBox[0].value;
+  const btoaPassword = btoa(password);
 
   if (id === "") {
     alert(`아이디를 입력하세요.`);
@@ -92,13 +94,13 @@ function checkValue(event) {
 
   if (
     users.some((obj) => obj.id !== id) ||
-    users.some((obj) => obj.password !== password)
+    users.some((obj) => obj.password !== btoaPassword)
   ) {
     alert(`아이디 또는 비밀번호를 잘못 입력했습니다.`);
   }
 
   for (let i = 0; i < users.length; i++) {
-    if (users[i].id === id && users[i].password === password) {
+    if (users[i].id === id && users[i].password === btoaPassword) {
       alert(`${id}님 반갑습니다.`);
       window.location.href = "sub.html";
     }
