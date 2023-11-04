@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
 /* main */
 * {
   margin: 0 auto;
@@ -6,36 +7,40 @@
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
 }
+
 #bg-img {
   width: 100vw;
   height: 33vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: blue; */
 }
+
 #bg-img img {
-  height: 80%;
+  height: 50%;
 }
+
 #login-box {
-  width: 100vw;
+  width: 360px;
   height: 33vh;
-  float: right;
-  border-top: 3px solid #000;
-  border-bottom: 3px solid #000;
+  margin-top: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: red; */
+  border: 2px solid #1d377d;
+  border-radius: 30px;
 }
+
 #login-form {
   width: 300px;
 }
+
 #login-box h2 {
   font-size: 20px;
   padding: 0 0 10px 0;
   font-weight: 300;
 }
+
 .user-id,
 .user-pass {
   width: 300px;
@@ -44,37 +49,41 @@
   padding-left: 10px;
   background: #f1f1f1;
   border: none;
+  border-radius: 10px;
 }
+
 .join-btn,
 .login-btn {
   width: 140px;
   height: 40px;
-  border: none;
   margin-top: 10px;
   background: #1d377d;
   color: #fff;
+  border: none;
+  border-radius: 5px;
 }
 .login-btn {
   margin-left: 13px;
 }
 
 #title h1 {
-  font-size: calc(10vw + 40px);
+  position: absolute;
+  font-size: calc(2vw + 25px);
   font-weight: 100;
   text-align: center;
   line-height: 33vh;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 0);
 }
 
 /*board*/
 #board-box {
   width: 100vw;
   height: 90vh;
-  /* border-top: 3px solid #000;
-  border-bottom: 3px solid #000; */
   position: absolute;
   top: 50%;
   transform: translate(0, -50%);
-  /* background: skyblue; */
 }
 
 #list-box {
@@ -86,9 +95,11 @@
   font-size: 70px;
   font-weight: 100;
 }
+
 #search-part {
   float: right;
 }
+
 #search {
   width: 200px;
   height: 30px;
@@ -96,6 +107,7 @@
   margin-right: 5px;
   padding: 5px;
 }
+
 #search-btn {
   width: 80px;
   height: 30px;
@@ -103,12 +115,14 @@
   border: none;
   color: #fff;
 }
+
 #list {
   clear: both;
   width: 80vw;
   height: 70vh;
   /* background-color: lightgoldenrodyellow; */
 }
+
 #container tr td {
   width: 10vw;
   height: 6vh;
@@ -116,19 +130,23 @@
   color: #1d377d;
   border-bottom: 1px solid #1d377d;
 }
+
 #content tr td {
   width: 10vw;
   height: 6vh;
   border-bottom: 1px solid #f1f1f1;
 }
+
 #content tr :nth-child(1) {
   font-weight: 400;
 }
+
 #page-list {
   text-align: center;
   padding-top: 20px;
   margin-left: -10px;
 }
+
 #page-list a {
   margin-left: 10px;
   color: #000;
@@ -136,6 +154,7 @@
   font-size: 20px;
   font-weight: 100;
 }
+
 #page-list a.num.on {
   color: #1d377d;
   font-weight: 400;
