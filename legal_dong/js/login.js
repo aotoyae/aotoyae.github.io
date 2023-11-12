@@ -9,7 +9,7 @@ const upperRule = /[A-Z]/;
 localStorage.setItem("users", JSON.stringify([]));
 const users = JSON.parse(localStorage.getItem("users"));
 
-function joinMembership(event) {
+function handleSignUp(event) {
   event.preventDefault();
   const id = idBox[0].value;
   const password = passBox[0].value;
@@ -92,20 +92,19 @@ function checkValue(event) {
     return false;
   }
 
-  if (
-    users.some((obj) => obj.id !== id) ||
-    users.some((obj) => obj.password !== btoaPassword)
-  ) {
-    alert(`아이디 또는 비밀번호를 잘못 입력했습니다.`);
-  }
+  return users.some((obj) => obj.id === id && obj.password === btoaPassword);
+}
 
-  for (let i = 0; i < users.length; i++) {
-    if (users[i].id === id && users[i].password === btoaPassword) {
-      alert(`${id}님 반갑습니다.`);
-      window.location.href = "sub.html";
-    }
+function handleLogIn(event) {
+  const isValid = checkValue(event);
+
+  if (isValid) {
+    alert(`${id}님 반갑습니다.`);
+    window.location.href = "sub.html";
+  } else {
+    `아이디 또는 비밀번호를 잘못 입력했습니다.`;
   }
 }
 
-joinBtn[0].addEventListener("click", joinMembership);
-loginBtn[0].addEventListener("click", checkValue);
+joinBtn[0].addEventListener("click", handleSignUp);
+loginBtn[0].addEventListener("click", handleLogIn);
