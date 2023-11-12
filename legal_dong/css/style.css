@@ -111,8 +111,8 @@
   border-radius: 5px;
 }
 
-#search-btn,
-#logout-btn {
+.search-btn,
+.logout-btn {
   width: 80px;
   height: 30px;
   background: #1d377d;
