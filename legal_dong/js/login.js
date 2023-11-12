@@ -97,6 +97,7 @@ function checkValue(event) {
 
 function handleLogIn(event) {
   const isValid = checkValue(event);
+  const id = idBox[0].value;
 
   if (isValid) {
     alert(`${id}님 반갑습니다.`);
