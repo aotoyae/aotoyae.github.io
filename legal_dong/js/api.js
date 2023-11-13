@@ -3,7 +3,10 @@ const pageList = document.querySelectorAll("#page-list a");
 const pageNumber = document.querySelectorAll("#page-list .num");
 const searchBox = document.getElementById("search");
 const searchBtn = document.getElementById("search-btn");
+const logoutBtn = document.getElementsByClassName("logout-btn");
+
 const key = api.key;
+
 const url = `https://api.odcloud.kr/api/15063424/v1/uddi:257e1510-0eeb-44de-8883-8295c94dadf7?page=1&perPage=10&&serviceKey=${key}`;
 let pageListNum = 1;
 
@@ -150,4 +153,8 @@ if (pageList.length > 0) {
   }
 }
 
-searchBtn.addEventListener("click", search);
+function logOut() {
+  window.location.href = "main.html";
+}
+
+logoutBtn[0].addEventListener("click", logOut);
