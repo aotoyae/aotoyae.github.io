@@ -6,11 +6,11 @@ const numRule = /[0-9]/;
 const lowerRule = /[a-z]/;
 const upperRule = /[A-Z]/;
 
-localStorage.setItem("users", JSON.stringify([]));
 const users = JSON.parse(localStorage.getItem("users"));
 
-function handleSignUp(event) {
+function handleJoin(event) {
   event.preventDefault();
+  localStorage.setItem("users", JSON.stringify([]));
   const id = idBox[0].value;
   const password = passBox[0].value;
   const btoaPassword = btoa(password);
@@ -107,5 +107,5 @@ function handleLogIn(event) {
   }
 }
 
-joinBtn[0].addEventListener("click", handleSignUp);
+joinBtn[0].addEventListener("click", handleJoin);
 loginBtn[0].addEventListener("click", handleLogIn);
