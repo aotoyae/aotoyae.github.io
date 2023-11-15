@@ -7,17 +7,17 @@ const lowerRule = /[a-z]/;
 const upperRule = /[A-Z]/;
 
 const users = JSON.parse(localStorage.getItem("users"));
+localStorage.setItem("users", JSON.stringify([]));
 
 function handleJoin(event) {
   event.preventDefault();
-  localStorage.setItem("users", JSON.stringify([]));
   const id = idBox[0].value;
   const password = passBox[0].value;
   const btoaPassword = btoa(password);
 
   if (id === "") {
     alert(`아이디를 입력하세요.`);
-    return false;
+    return;
   } else if (
     !numRule.test(id) ||
     !lowerRule.test(id) ||
@@ -25,12 +25,12 @@ function handleJoin(event) {
     id.length < 5
   ) {
     alert(`아이디: 5~20자의 영문 소문자, 숫자를 입력해 주세요.`);
-    return false;
+    return;
   }
 
   if (password === "") {
     alert(`비밀번호를 입력하세요.`);
-    return false;
+    return;
   } else if (
     !numRule.test(password) ||
     !lowerRule.test(password) ||
@@ -39,13 +39,13 @@ function handleJoin(event) {
     password.length < 8
   ) {
     alert(`비밀번호: 8~20자의 영문 대소문자, 숫자를 입력해 주세요.`);
-    return false;
+    return;
   }
 
   for (const user of users) {
     if (id === user.id) {
       alert(`사용할 수 없는 아이디입니다. 다른 아이디를 입력해 주세요.`);
-      return false;
+      return;
     }
   }
 
@@ -62,7 +62,7 @@ function checkValue(event) {
 
   if (id === "") {
     alert(`아이디를 입력하세요.`);
-    return false;
+    return;
   } else if (
     !numRule.test(id) ||
     !lowerRule.test(id) ||
@@ -70,12 +70,12 @@ function checkValue(event) {
     id.length < 5
   ) {
     alert(`아이디: 5~20자의 영문 소문자, 숫자를 입력해 주세요.`);
-    return false;
+    return;
   }
 
   if (password === "") {
     alert(`비밀번호를 입력하세요.`);
-    return false;
+    return;
   } else if (
     !numRule.test(password) ||
     !lowerRule.test(password) ||
@@ -84,12 +84,12 @@ function checkValue(event) {
     password.length < 8
   ) {
     alert(`비밀번호: 8~20자의 영문 대소문자, 숫자를 입력해 주세요.`);
-    return false;
+    return;
   }
 
   if (users.length === 0) {
     alert(`회원가입을 진행해 주세요.`);
-    return false;
+    return;
   }
 
   return users.some((obj) => obj.id === id && obj.password === btoaPassword);
