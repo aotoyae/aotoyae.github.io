@@ -7,6 +7,7 @@ const lowerRule = /[a-z]/;
 const upperRule = /[A-Z]/;
 
 const users = JSON.parse(localStorage.getItem("users"));
+localStorage.setItem("users", JSON.stringify([]));
 
 function handleJoin(event) {
   event.preventDefault();
