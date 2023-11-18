@@ -1,4 +1,5 @@
 const content = document.querySelector("#content");
+// const pageBtn = document.querySelector("#page-list");
 const pageList = document.querySelectorAll("#page-list a");
 const pageNumber = document.querySelectorAll("#page-list .num");
 const searchBox = document.getElementById("search");
@@ -9,6 +10,12 @@ const key = api.key;
 
 const url = `https://api.odcloud.kr/api/15063424/v1/uddi:257e1510-0eeb-44de-8883-8295c94dadf7?page=1&perPage=10&&serviceKey=${key}`;
 let pageListNum = 1;
+
+// function clickedPage() {
+//   console.log("hi");
+// }
+
+// pageList.addEventListener("click", clickedPage);
 
 // 처음 페이지로 이동하는 함수
 function firstPage() {
@@ -47,7 +54,6 @@ function displayJson(json) {
                   }</td>
                   </tr>`;
   });
-  console.log(dongData[0]);
 }
 
 // 에러시 실행 함수
@@ -120,20 +126,26 @@ function lastPage() {
 function getPage(event) {
   content.innerHTML = "";
   let page = event.target.innerHTML;
+  let onNum = document.querySelector(".on");
+  console.log(onNum);
+  onNum.classList.remove("on");
 
   if (page === `&gt;`) {
+    pageList[2].classList.add("on");
     pageListNum += 10;
     for (let i = 0; i < 10; i++) {
       pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) + 10;
     }
     nextPage(pageListNum);
   } else if (page === `&lt;` && Number(pageNumber[0].innerHTML) !== 1) {
+    pageList[2].classList.add("on");
     pageListNum -= 10;
     for (let i = 0; i < 10; i++) {
       pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) - 10;
     }
     prevPage(pageListNum);
   } else if (page === `처음으로`) {
+    pageList[2].classList.add("on");
     for (let i = 0; i < 10; i++) {
       pageNumber[i].innerHTML = 1;
       pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) + i;
@@ -142,6 +154,7 @@ function getPage(event) {
   } else if (page === `마지막으로`) {
     lastPage();
   } else {
+    event.target.classList.add("on");
     pagingNum(page);
   }
 }
