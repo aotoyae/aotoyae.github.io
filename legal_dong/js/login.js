@@ -6,8 +6,12 @@ const numRule = /[0-9]/;
 const lowerRule = /[a-z]/;
 const upperRule = /[A-Z]/;
 
+let accountData = [];
 const users = JSON.parse(localStorage.getItem("users"));
-localStorage.setItem("users", JSON.stringify([]));
+
+if (users !== null) {
+  accountData = users;
+}
 
 function handleJoin(event) {
   event.preventDefault();
@@ -28,7 +32,7 @@ function handleJoin(event) {
     return;
   }
 
-  for (const user of users) {
+  for (const user of accountData) {
     if (id === user.id) {
       alert(`사용할 수 없는 아이디입니다. 다른 아이디를 입력해 주세요.`);
       return;
@@ -49,8 +53,8 @@ function handleJoin(event) {
     return;
   }
 
-  users.push({ id: id, password: btoaPassword });
-  localStorage.setItem("users", JSON.stringify(users));
+  accountData.push({ id: id, password: btoaPassword });
+  localStorage.setItem("users", JSON.stringify(accountData));
   alert(`${id}님 회원가입을 환영합니다.`);
 }
 
@@ -87,7 +91,7 @@ function checkValue(event) {
     return;
   }
 
-  if (users.length === 0) {
+  if (accountData.length === 0) {
     alert(`회원가입을 진행해 주세요.`);
     return;
   }
