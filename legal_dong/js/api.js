@@ -120,7 +120,6 @@ function getPage(event) {
   content.innerHTML = "";
   let page = event.target.innerHTML;
   let onNum = document.querySelector(".on");
-  console.log(onNum);
   onNum.classList.remove("on");
 
   if (page === `&gt;`) {
