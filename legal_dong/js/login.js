@@ -96,7 +96,9 @@ function checkValue(event) {
     return;
   }
 
-  return users.some((obj) => obj.id === id && obj.password === btoaPassword);
+  return accountData.some(
+    (obj) => obj.id === id && obj.password === btoaPassword
+  );
 }
 
 function handleLogIn(event) {
