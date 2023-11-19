@@ -1,5 +1,5 @@
-const idBox = document.getElementsByClassName("user-id");
-const passBox = document.getElementsByClassName("user-pass");
+const idBox = document.getElementById("user-id");
+const passBox = document.getElementById("user-pass");
 const joinBtn = document.getElementsByClassName("join-btn");
 const loginBtn = document.getElementsByClassName("login-btn");
 const numRule = /[0-9]/;
@@ -15,8 +15,8 @@ if (users !== null) {
 
 function handleJoin(event) {
   event.preventDefault();
-  const id = idBox[0].value;
-  const password = passBox[0].value;
+  const id = idBox.value;
+  const password = passBox.value;
   const btoaPassword = btoa(password);
 
   if (id === "") {
@@ -60,8 +60,8 @@ function handleJoin(event) {
 
 function checkValue(event) {
   event.preventDefault();
-  const id = idBox[0].value;
-  const password = passBox[0].value;
+  const id = idBox.value;
+  const password = passBox.value;
   const btoaPassword = btoa(password);
 
   if (id === "") {
@@ -103,7 +103,7 @@ function checkValue(event) {
 
 function handleLogIn(event) {
   const isValid = checkValue(event);
-  const id = idBox[0].value;
+  const id = idBox.value;
 
   if (isValid) {
     alert(`${id}님 반갑습니다.`);
