@@ -1,21 +1,14 @@
 const content = document.querySelector("#content");
-// const pageBtn = document.querySelector("#page-list");
 const pageList = document.querySelectorAll("#page-list a");
 const pageNumber = document.querySelectorAll("#page-list .num");
-const searchBox = document.getElementById("search");
-const searchBtn = document.getElementById("search-btn");
+const searchBox = document.getElementById("search-box");
+const searchBtn = document.getElementsByClassName("search-btn");
 const logoutBtn = document.getElementsByClassName("logout-btn");
 
 const key = api.key;
 
 const url = `https://api.odcloud.kr/api/15063424/v1/uddi:257e1510-0eeb-44de-8883-8295c94dadf7?page=1&perPage=10&&serviceKey=${key}`;
 let pageListNum = 1;
-
-// function clickedPage() {
-//   console.log("hi");
-// }
-
-// pageList.addEventListener("click", clickedPage);
 
 // 처음 페이지로 이동하는 함수
 function firstPage() {
@@ -159,7 +152,7 @@ function getPage(event) {
   }
 }
 
-function search() {
+function searchDong() {
   console.log(searchBox.value);
 }
 
@@ -173,4 +166,5 @@ function logOut() {
   window.location.href = "main.html";
 }
 
+searchBtn[0].addEventListener("click", searchDong);
 logoutBtn[0].addEventListener("click", logOut);
