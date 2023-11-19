@@ -108,7 +108,7 @@ function handleLogIn(event) {
   if (isValid) {
     alert(`${id}님 반갑습니다.`);
     window.location.href = "sub.html";
-  } else {
+  } else if (isValid === false) {
     alert(`아이디 또는 비밀번호를 잘못 입력했습니다.`);
   }
 }
