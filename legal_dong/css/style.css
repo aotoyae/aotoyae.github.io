@@ -112,6 +112,10 @@
   border-radius: 5px;
 }
 
+#sub-btns {
+  display: inline;
+}
+
 .search-btn,
 .logout-btn {
   width: 80px;
