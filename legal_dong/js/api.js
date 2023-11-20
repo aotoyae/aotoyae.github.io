@@ -20,6 +20,7 @@ function firstPage() {
   fetch(urlWithKey)
     .then((response) => response.json())
     .then((json) => {
+      pageSize = Math.ceil(json.totalCount / DEFAULT_PER_PAGE);
       displayJson(json);
       // console.log(json.currentCount);
       // console.log(json.totalCount);
