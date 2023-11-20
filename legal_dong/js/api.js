@@ -4,15 +4,20 @@ const pageNumber = document.querySelectorAll("#page-list .num");
 const searchBox = document.getElementById("search-box");
 const searchBtn = document.getElementsByClassName("search-btn");
 const logoutBtn = document.getElementsByClassName("logout-btn");
-
 const key = api.key;
 
-const url = `https://api.odcloud.kr/api/15063424/v1/uddi:257e1510-0eeb-44de-8883-8295c94dadf7?page=1&perPage=10&&serviceKey=${key}`;
+const DEFAULT_PER_PAGE = 10;
 let pageListNum = 1;
+let pageSize = 0;
+let page = 1;
+
+const url = `https://api.odcloud.kr/api/15063424/v1/uddi:257e1510-0eeb-44de-8883-8295c94dadf7?`;
+const urlWithKey = `${url}page=1&perPage=10&&serviceKey=${key}`;
+// const urlWithKeyAndPerPage=
 
 // 처음 페이지로 이동하는 함수
 function firstPage() {
-  fetch(url)
+  fetch(urlWithKey)
     .then((response) => response.json())
     .then((json) => {
       displayJson(json);
@@ -31,22 +36,27 @@ firstPage();
 // 법정동 리스트 가져와 보여주는 함수
 function displayJson(json) {
   let dongData = json.data;
-  dongData.forEach((ele) => {
-    content.innerHTML += `
-                  <tr>
-                  <td>${ele.법정동코드 !== null ? ele.법정동코드 : `-`}</td>
-                  <td>${ele.시도명 !== null ? ele.시도명 : `-`}</td>
-                  <td>${ele.시군구명 !== null ? ele.시군구명 : `-`}</td>
-                  <td>${ele.읍면동명 !== null ? ele.읍면동명 : `-`}</td>
-                  <td>${ele.리명 !== null ? ele.리명 : `-`}</td>
-                  <td>${ele.순위 !== null ? ele.순위 : `-`}</td>
-                  <td>${ele.생성일자 !== null ? ele.생성일자 : `-`}</td>
-                  <td>${ele.삭제일자 !== null ? ele.삭제일자 : `-`}</td>
-                  <td>${
-                    ele.과거법정동코드 !== null ? ele.과거법정동코드 : `-`
-                  }</td>
-                  </tr>`;
-  });
+  // console.log(dongData.filter((v) => v.읍면동명 === `동탄면`));
+  if (searchBox.value.length !== 0) {
+    console.log("hi");
+  } else {
+    dongData.forEach((ele) => {
+      content.innerHTML += `
+                      <tr>
+                      <td>${ele.법정동코드 !== null ? ele.법정동코드 : `-`}</td>
+                      <td>${ele.시도명 !== null ? ele.시도명 : `-`}</td>
+                      <td>${ele.시군구명 !== null ? ele.시군구명 : `-`}</td>
+                      <td>${ele.읍면동명 !== null ? ele.읍면동명 : `-`}</td>
+                      <td>${ele.리명 !== null ? ele.리명 : `-`}</td>
+                      <td>${ele.순위 !== null ? ele.순위 : `-`}</td>
+                      <td>${ele.생성일자 !== null ? ele.생성일자 : `-`}</td>
+                      <td>${ele.삭제일자 !== null ? ele.삭제일자 : `-`}</td>
+                      <td>${
+                        ele.과거법정동코드 !== null ? ele.과거법정동코드 : `-`
+                      }</td>
+                      </tr>`;
+    });
+  }
 }
 
 // 에러시 실행 함수
@@ -129,13 +139,18 @@ function getPage(event) {
       pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) + 10;
     }
     nextPage(pageListNum);
-  } else if (page === `&lt;` && Number(pageNumber[0].innerHTML) !== 1) {
+  } else if (page === `&lt;`) {
     pageList[2].classList.add("on");
-    pageListNum -= 10;
-    for (let i = 0; i < 10; i++) {
-      pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) - 10;
+    if (Number(pageNumber[0].innerHTML) !== 1) {
+      pageListNum -= 10;
+      for (let i = 0; i < 10; i++) {
+        pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) - 10;
+      }
+      prevPage(pageListNum);
+    } else {
+      alert(`첫 페이지입니다.`);
+      firstPage();
     }
-    prevPage(pageListNum);
   } else if (page === `처음으로`) {
     pageList[2].classList.add("on");
     for (let i = 0; i < 10; i++) {
@@ -151,10 +166,6 @@ function getPage(event) {
   }
 }
 
-function searchDong() {
-  console.log(searchBox.value);
-}
-
 if (pageList.length > 0) {
   for (let i = 0; i < pageList.length; i++) {
     pageList[i].addEventListener("click", getPage);
@@ -165,5 +176,5 @@ function logOut() {
   window.location.href = "main.html";
 }
 
-searchBtn[0].addEventListener("click", searchDong);
+searchBtn[0].addEventListener("click", displayJson);
 logoutBtn[0].addEventListener("click", logOut);
