@@ -129,7 +129,9 @@ function getPage(event) {
       }
       moveList(pageListNum);
     } else {
-      alert(`첫 페이지입니다.`);
+      if (Number(onNum.innerHTML) === 1) {
+        alert(`첫 페이지입니다.`);
+      }
       firstPage();
     }
   } else if (pageBtn === `처음으로`) {
