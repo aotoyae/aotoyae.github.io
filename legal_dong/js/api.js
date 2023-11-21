@@ -9,7 +9,7 @@ const key = api.key;
 const DEFAULT_PER_PAGE = 10;
 let pageListNum = 1;
 let pageSize = 0;
-let page = 1;
+// let page = 1;
 
 const url = `https://api.odcloud.kr/api/15063424/v1/uddi:257e1510-0eeb-44de-8883-8295c94dadf7?`;
 const urlWithKey = `${url}page=1&perPage=10&&serviceKey=${key}`;
@@ -72,9 +72,7 @@ function catchError(error) {
 
 // 숫자 클릭 시 페이지 이동하는 함수
 function pagingNum(page) {
-  fetch(
-    `https://api.odcloud.kr/api/15063424/v1/uddi:257e1510-0eeb-44de-8883-8295c94dadf7?page=${page}&perPage=10&&serviceKey=${key}`
-  )
+  fetch(`${url}page=${page}&perPage=10&&serviceKey=${key}`)
     .then((response) => response.json())
     .then((json) => {
       displayJson(json);
@@ -86,9 +84,7 @@ function pagingNum(page) {
 
 // > 클릭 시 다음 페이지 목록으로 이동하는 함수
 function nextPage(pageListNum) {
-  fetch(
-    `https://api.odcloud.kr/api/15063424/v1/uddi:257e1510-0eeb-44de-8883-8295c94dadf7?page=${pageListNum}&perPage=10&&serviceKey=${key}`
-  )
+  fetch(`${url}page=${pageListNum}&perPage=10&&serviceKey=${key}`)
     .then((response) => response.json())
     .then((json) => {
       displayJson(json);
@@ -100,9 +96,7 @@ function nextPage(pageListNum) {
 
 // < 클릭 시 이전 페이지 목록으로 이동하는 함수
 function prevPage(pageListNum) {
-  fetch(
-    `https://api.odcloud.kr/api/15063424/v1/uddi:257e1510-0eeb-44de-8883-8295c94dadf7?page=${pageListNum}&perPage=10&&serviceKey=${key}`
-  )
+  fetch(`${url}page=${pageListNum}&perPage=10&&serviceKey=${key}`)
     .then((response) => response.json())
     .then((json) => {
       displayJson(json);
@@ -114,9 +108,7 @@ function prevPage(pageListNum) {
 
 // 마지막 페이지로 이동하는 함수
 function lastPage() {
-  fetch(
-    `https://api.odcloud.kr/api/15063424/v1/uddi:257e1510-0eeb-44de-8883-8295c94dadf7?page=4793&perPage=10&&serviceKey=${key}`
-  )
+  fetch(`${url}page=4793&perPage=10&&serviceKey=${key}`)
     .then((response) => response.json())
     .then((json) => {
       displayJson(json);
