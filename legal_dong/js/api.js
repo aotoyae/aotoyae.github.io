@@ -12,7 +12,8 @@ let pageSize = 0;
 let page = 1;
 
 const url = `https://api.odcloud.kr/api/15063424/v1/uddi:257e1510-0eeb-44de-8883-8295c94dadf7?`;
-const fullUrl = `${url}page=${page}&perPage=${DEFAULT_PER_PAGE}&&serviceKey=${key}`;
+const urlWithPerPageAndKey = `${url}&perPage=${DEFAULT_PER_PAGE}&serviceKey=${key}`;
+const fullUrl = `${urlWithPerPageAndKey}&page=${page}`;
 // const urlWithKeyAndPerPage=
 
 // 처음 페이지로 이동하는 함수
@@ -71,8 +72,9 @@ function catchError(error) {
 }
 
 // 숫자 클릭 시 페이지 이동하는 함수
-function pagingNum(page) {
-  fetch(`${url}page=${page}&perPage=10&&serviceKey=${key}`)
+function pagingNum(pageBtn) {
+  page = pageBtn;
+  fetch(`${urlWithPerPageAndKey}&page=${page}`)
     .then((response) => response.json())
     .then((json) => {
       displayJson(json);
@@ -82,9 +84,10 @@ function pagingNum(page) {
     });
 }
 
-// > 클릭 시 다음 페이지 목록으로 이동하는 함수
+// > 클릭 시 이전,다음 페이지 목록으로 이동하는 함수
 function moveList(pageListNum) {
-  fetch(`${url}page=${pageListNum}&perPage=10&&serviceKey=${key}`)
+  page = pageListNum;
+  fetch(`${urlWithPerPageAndKey}&page=${page}`)
     .then((response) => response.json())
     .then((json) => {
       displayJson(json);
@@ -96,7 +99,7 @@ function moveList(pageListNum) {
 
 // 마지막 페이지로 이동하는 함수
 function lastPage() {
-  fetch(`${url}page=4793&perPage=10&&serviceKey=${key}`)
+  fetch(`${url}page=4793&perPage=${DEFAULT_PER_PAGE}&&serviceKey=${key}`)
     .then((response) => response.json())
     .then((json) => {
       displayJson(json);
