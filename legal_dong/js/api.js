@@ -134,9 +134,13 @@ function getPage(event) {
     }
   } else if (page === `처음으로`) {
     pageList[2].classList.add("on");
-    for (let i = 0; i < 10; i++) {
-      pageNumber[i].innerHTML = 1;
-      pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) + i;
+    if (Number(onNum.innerHTML) === 1) {
+      alert(`첫 페이지입니다.`);
+    } else {
+      for (let i = 0; i < 10; i++) {
+        pageNumber[i].innerHTML = 1;
+        pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) + i;
+      }
     }
     firstPage();
   } else if (page === `마지막으로`) {
