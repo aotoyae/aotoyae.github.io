@@ -83,19 +83,7 @@ function pagingNum(page) {
 }
 
 // > 클릭 시 다음 페이지 목록으로 이동하는 함수
-function nextPage(pageListNum) {
-  fetch(`${url}page=${pageListNum}&perPage=10&&serviceKey=${key}`)
-    .then((response) => response.json())
-    .then((json) => {
-      displayJson(json);
-    })
-    .catch((error) => {
-      catchError(error);
-    });
-}
-
-// < 클릭 시 이전 페이지 목록으로 이동하는 함수
-function prevPage(pageListNum) {
+function moveList(pageListNum) {
   fetch(`${url}page=${pageListNum}&perPage=10&&serviceKey=${key}`)
     .then((response) => response.json())
     .then((json) => {
@@ -131,7 +119,7 @@ function getPage(event) {
     for (let i = 0; i < 10; i++) {
       pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) + 10;
     }
-    nextPage(pageListNum);
+    moveList(pageListNum);
   } else if (page === `&lt;`) {
     pageList[2].classList.add("on");
     if (Number(pageNumber[0].innerHTML) !== 1) {
@@ -139,7 +127,7 @@ function getPage(event) {
       for (let i = 0; i < 10; i++) {
         pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) - 10;
       }
-      prevPage(pageListNum);
+      moveList(pageListNum);
     } else {
       alert(`첫 페이지입니다.`);
       firstPage();
