@@ -62,7 +62,7 @@ function handleJoin(event) {
   alert(`${id}님 회원가입을 환영합니다.`);
 }
 
-function checkLogInInpo(event) {
+function checkAccount(event) {
   event.preventDefault();
   const id = idBox.value;
   const password = passBox.value;
@@ -97,7 +97,7 @@ function checkLogInInpo(event) {
 }
 
 function handleLogIn(event) {
-  const accountIsValid = checkLogInInpo(event);
+  const accountIsValid = checkAccount(event);
   const id = idBox.value;
 
   if (accountIsValid) {
