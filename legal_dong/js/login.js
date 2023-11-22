@@ -32,13 +32,6 @@ function handleJoin(event) {
     return;
   }
 
-  for (const user of accountData) {
-    if (id === user.id) {
-      alert(`사용할 수 없는 아이디입니다. 다른 아이디를 입력해 주세요.`);
-      return;
-    }
-  }
-
   if (password === "") {
     alert(`비밀번호를 입력하세요.`);
     return;
@@ -51,6 +44,13 @@ function handleJoin(event) {
   ) {
     alert(`비밀번호: 8~20자의 영문 대소문자, 숫자를 입력해 주세요.`);
     return;
+  }
+
+  for (const user of accountData) {
+    if (id === user.id) {
+      alert(`사용할 수 없는 아이디입니다. 다른 아이디를 입력해 주세요.`);
+      return;
+    }
   }
 
   accountData.push({ id: id, password: btoaPassword });
