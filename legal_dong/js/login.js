@@ -62,8 +62,8 @@ function handleJoin(event) {
   alert(`${id}님 회원가입을 환영합니다.`);
 }
 
-function checkAccount(event) {
-  event.preventDefault();
+function checkAccount() {
+  // event.preventDefault();
   const id = idBox.value;
   const password = passBox.value;
   const btoaPassword = btoa(password);
@@ -97,6 +97,7 @@ function checkAccount(event) {
 }
 
 function handleLogIn(event) {
+  event.preventDefault();
   const accountIsValid = checkAccount(event);
   const id = idBox.value;
 
