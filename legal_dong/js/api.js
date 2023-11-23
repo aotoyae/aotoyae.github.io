@@ -1,6 +1,7 @@
 const content = document.querySelector("#content");
 const pageList = document.querySelectorAll("#page-list a");
-const pageNumber = document.querySelectorAll("#page-list .num");
+const pageSignBtn = document.querySelectorAll("#page-list btn");
+const pageNumberBtn = document.querySelectorAll("#page-list .num");
 const searchBox = document.getElementById("search-box");
 const searchBtn = document.getElementsByClassName("search-btn");
 const logoutBtn = document.getElementsByClassName("logout-btn");
@@ -14,7 +15,6 @@ let page = 1;
 const url = `https://api.odcloud.kr/api/15063424/v1/uddi:257e1510-0eeb-44de-8883-8295c94dadf7?`;
 const urlWithPerPageAndKey = `${url}&perPage=${DEFAULT_PER_PAGE}&serviceKey=${key}`;
 const fullUrl = `${urlWithPerPageAndKey}&page=${page}`;
-// const urlWithKeyAndPerPage=
 
 // 처음 페이지로 이동하는 함수
 function firstPage() {
@@ -24,7 +24,8 @@ function firstPage() {
       pageSize = Math.ceil(json.totalCount / DEFAULT_PER_PAGE);
       displayJson(json);
       // console.log(json.currentCount);
-      // console.log(json.totalCount);
+      console.log(json.totalCount);
+      console.log(pageSize);
       // console.log(json.page);
       // console.log(json.perPage);
     })
@@ -102,7 +103,11 @@ function lastPage() {
   fetch(`${url}page=4793&perPage=${DEFAULT_PER_PAGE}&&serviceKey=${key}`)
     .then((response) => response.json())
     .then((json) => {
+      pageSize = Math.ceil(json.totalCount / DEFAULT_PER_PAGE);
       displayJson(json);
+      for (let i = 0; i < 10; i++) {
+        pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) + 10;
+      }
     })
     .catch((error) => {
       catchError(error);
