@@ -1,7 +1,10 @@
 const content = document.querySelector("#content");
 const pageList = document.querySelectorAll("#page-list a");
-const pageSignBtn = document.querySelectorAll("#page-list btn");
 const pageNumberBtn = document.querySelectorAll("#page-list .num");
+const firstBtn = document.querySelectorAll("#page-list .first");
+const preveBtn = document.querySelectorAll("#page-list .prev");
+const nextBtn = document.querySelectorAll("#page-list .next");
+const lastBtn = document.querySelectorAll("#page-list .last");
 const searchBox = document.getElementById("search-box");
 const searchBtn = document.getElementsByClassName("search-btn");
 const logoutBtn = document.getElementsByClassName("logout-btn");
