@@ -22,11 +22,9 @@ function checkPwIsValid(password) {
   );
 }
 
-function handleJoin(event) {
-  event.preventDefault();
+function checkInputValue() {
   const id = idBox.value;
   const password = passBox.value;
-  const btoaPassword = btoa(password);
 
   if (id === "") {
     alert(`아이디를 입력하세요.`);
@@ -41,6 +39,23 @@ function handleJoin(event) {
     return;
   } else if (checkPwIsValid(password)) {
     alert(`비밀번호: 8~20자의 영문 대소문자, 숫자를 입력해 주세요.`);
+    return;
+  }
+}
+
+function handleJoin(event) {
+  event.preventDefault();
+  const id = idBox.value;
+  const password = passBox.value;
+  const btoaPassword = btoa(password);
+
+  if (
+    id === "" ||
+    checkIdIsValid(id) ||
+    password === "" ||
+    checkPwIsValid(password)
+  ) {
+    checkInputValue();
     return;
   }
 
@@ -68,19 +83,13 @@ function checkAccount() {
   const password = passBox.value;
   const btoaPassword = btoa(password);
 
-  if (id === "") {
-    alert(`아이디를 입력하세요.`);
-    return;
-  } else if (checkIdIsValid(id)) {
-    alert(`아이디: 5~20자의 영문 소문자, 숫자를 입력해 주세요.`);
-    return;
-  }
-
-  if (password === "") {
-    alert(`비밀번호를 입력하세요.`);
-    return;
-  } else if (checkPwIsValid(password)) {
-    alert(`비밀번호: 8~20자의 영문 대소문자, 숫자를 입력해 주세요.`);
+  if (
+    id === "" ||
+    checkIdIsValid(id) ||
+    password === "" ||
+    checkPwIsValid(password)
+  ) {
+    checkInputValue();
     return;
   }
 
@@ -98,7 +107,7 @@ function checkAccount() {
 
 function handleLogIn(event) {
   event.preventDefault();
-  const accountIsValid = checkAccount(event);
+  const accountIsValid = checkAccount();
   const id = idBox.value;
 
   if (accountIsValid) {
