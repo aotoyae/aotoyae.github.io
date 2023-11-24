@@ -169,7 +169,12 @@
   font-weight: 100;
 }
 
-#page-list a.num.on {
+#page-list a.on {
   color: #1d377d;
   font-weight: 400;
+}
+
+#page-list a.hide {
+  color: red;
+  display: none;
 }
