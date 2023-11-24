@@ -1,10 +1,10 @@
 const content = document.querySelector("#content");
 const pageList = document.querySelectorAll("#page-list a");
 const pageNumberBtn = document.querySelectorAll("#page-list .num");
-const firstBtn = document.querySelectorAll("#page-list .first");
-const preveBtn = document.querySelectorAll("#page-list .prev");
-const nextBtn = document.querySelectorAll("#page-list .next");
-const lastBtn = document.querySelectorAll("#page-list .last");
+const firstBtn = document.getElementsByClassName("first");
+const prevBtn = document.getElementsByClassName("prev");
+const nextBtn = document.getElementsByClassName("next");
+const lastBtn = document.getElementsByClassName("last");
 const searchBox = document.getElementById("search-box");
 const searchBtn = document.getElementsByClassName("search-btn");
 const logoutBtn = document.getElementsByClassName("logout-btn");
@@ -26,11 +26,11 @@ function firstPage() {
     .then((json) => {
       pageSize = Math.ceil(json.totalCount / DEFAULT_PER_PAGE);
       displayJson(json);
-      // console.log(json.currentCount);
-      console.log(json.totalCount);
-      console.log(pageSize);
-      // console.log(json.page);
-      // console.log(json.perPage);
+      // console.log(json.currentCount); // 10
+      // console.log(json.totalCount); // 47921
+      // console.log(pageSize); // 4793
+      // console.log(json.page); // 1
+      // console.log(json.perPage); // 10
     })
     .catch((error) => {
       catchError(error);
@@ -44,7 +44,6 @@ function displayJson(json) {
   let dongData = json.data;
   // console.log(dongData.filter((v) => v.읍면동명 === `동탄면`));
   if (searchBox.value.length !== 0) {
-    console.log("hi");
   } else {
     dongData.forEach((ele) => {
       content.innerHTML += `
@@ -103,13 +102,31 @@ function moveList(pageListNum) {
 
 // 마지막 페이지로 이동하는 함수
 function lastPage() {
-  fetch(`${url}page=4793&perPage=${DEFAULT_PER_PAGE}&&serviceKey=${key}`)
+  fetch(`${url}page=${pageSize}&perPage=${DEFAULT_PER_PAGE}&&serviceKey=${key}`)
     .then((response) => response.json())
     .then((json) => {
-      pageSize = Math.ceil(json.totalCount / DEFAULT_PER_PAGE);
       displayJson(json);
-      for (let i = 0; i < 10; i++) {
-        pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) + 10;
+
+      pageSize = Math.ceil(json.totalCount / DEFAULT_PER_PAGE); // 4793
+      let perPage = json.perPage; // 10
+      let firstNumOfLastList = Math.floor(pageSize / perPage) * 10 + 1; // 4791
+      let numOfLastList = pageSize % 10; // 3
+      const lastPageIdx = pageNumberBtn[numOfLastList - 1];
+
+      pageNumberBtn[numOfLastList - 1].classList.add("on");
+      pageListNum = pageSize;
+
+      if (Number(lastPageIdx.innerHTML) === pageSize) {
+        alert(`마지막 페이지입니다.`);
+      } else {
+        for (let i = 0; i < 10; i++) {
+          pageNumberBtn[i].innerHTML = firstNumOfLastList;
+          pageNumberBtn[i].innerHTML = Number(pageNumberBtn[i].innerHTML) + i;
+        }
+
+        for (j = numOfLastList; j < 10; j++) {
+          pageNumberBtn[j].classList.add("hide");
+        }
       }
     })
     .catch((error) => {
@@ -117,26 +134,46 @@ function lastPage() {
     });
 }
 
+// function toPrevPage() {
+//   console.log("hi");
+// }
+
 // 각 페이지 이동 함수를 실행하는 함수
 function getPage(event) {
   content.innerHTML = "";
   let pageBtn = event.target.innerHTML;
   let onNum = document.querySelector(".on");
+  // let hideNum = document.getElementsByClassName("hide");
   onNum.classList.remove("on");
+
+  if (pageBtn === `&lt;` || pageBtn === `처음으로`) {
+    for (i = 0; i < 10; i++) {
+      if (pageNumberBtn[i].classList.contains("hide")) {
+        pageNumberBtn[i].classList.remove("hide");
+      }
+    }
+  }
 
   if (pageBtn === `&gt;`) {
     pageList[2].classList.add("on");
-    pageListNum += 10;
-    for (let i = 0; i < 10; i++) {
-      pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) + 10;
+    if (Number(lastPageIdx.innerHTML) !== lastPageIdx + 1) {
+      pageListNum += 10;
+      for (let i = 0; i < 10; i++) {
+        pageNumberBtn[i].innerHTML = Number(pageNumberBtn[i].innerHTML) + 10;
+      }
+      moveList(pageListNum);
+    } else {
+      if (Number(onNum.innerHTML) === lastPage + 1) {
+        alert(`마지막 페이지입니다.`);
+      }
+      lastPage();
     }
-    moveList(pageListNum);
   } else if (pageBtn === `&lt;`) {
     pageList[2].classList.add("on");
-    if (Number(pageNumber[0].innerHTML) !== 1) {
+    if (Number(pageNumberBtn[0].innerHTML) !== 1) {
       pageListNum -= 10;
       for (let i = 0; i < 10; i++) {
-        pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) - 10;
+        pageNumberBtn[i].innerHTML = Number(pageNumberBtn[i].innerHTML) - 10;
       }
       moveList(pageListNum);
     } else {
@@ -151,8 +188,8 @@ function getPage(event) {
       alert(`첫 페이지입니다.`);
     } else {
       for (let i = 0; i < 10; i++) {
-        pageNumber[i].innerHTML = 1;
-        pageNumber[i].innerHTML = Number(pageNumber[i].innerHTML) + i;
+        pageNumberBtn[i].innerHTML = 1;
+        pageNumberBtn[i].innerHTML = Number(pageNumberBtn[i].innerHTML) + i;
       }
     }
     firstPage();
