@@ -78,7 +78,6 @@ function handleJoin(event) {
 }
 
 function checkAccount() {
-  // event.preventDefault();
   const id = idBox.value;
   const password = passBox.value;
   const btoaPassword = btoa(password);
