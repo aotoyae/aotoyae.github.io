@@ -42,11 +42,8 @@ firstPage();
 // 법정동 리스트 가져와 보여주는 함수
 function displayJson(json) {
   let dongData = json.data;
-  // console.log(dongData.filter((v) => v.읍면동명 === `동탄면`));
-  if (searchBox.value.length !== 0) {
-  } else {
-    dongData.forEach((ele) => {
-      content.innerHTML += `
+  dongData.forEach((ele) => {
+    content.innerHTML += `
                       <tr>
                       <td>${ele.법정동코드 !== null ? ele.법정동코드 : `-`}</td>
                       <td>${ele.시도명 !== null ? ele.시도명 : `-`}</td>
@@ -60,8 +57,28 @@ function displayJson(json) {
                         ele.과거법정동코드 !== null ? ele.과거법정동코드 : `-`
                       }</td>
                       </tr>`;
-    });
-  }
+  });
+}
+
+function searchDong(json) {
+  let dongData = json.data;
+  // console.log(dongData.filter((v) => v.읍면동명 === `동탄면`));
+  dongData.forEach((ele) => {
+    content.innerHTML += `
+                      <tr>
+                      <td>${ele.법정동코드 !== null ? ele.법정동코드 : `-`}</td>
+                      <td>${ele.시도명 !== null ? ele.시도명 : `-`}</td>
+                      <td>${ele.시군구명 !== null ? ele.시군구명 : `-`}</td>
+                      <td>${ele.읍면동명 !== null ? ele.읍면동명 : `-`}</td>
+                      <td>${ele.리명 !== null ? ele.리명 : `-`}</td>
+                      <td>${ele.순위 !== null ? ele.순위 : `-`}</td>
+                      <td>${ele.생성일자 !== null ? ele.생성일자 : `-`}</td>
+                      <td>${ele.삭제일자 !== null ? ele.삭제일자 : `-`}</td>
+                      <td>${
+                        ele.과거법정동코드 !== null ? ele.과거법정동코드 : `-`
+                      }</td>
+                      </tr>`;
+  });
 }
 
 // 에러시 실행 함수
@@ -134,16 +151,11 @@ function lastPage() {
     });
 }
 
-// function toPrevPage() {
-//   console.log("hi");
-// }
-
 // 각 페이지 이동 함수를 실행하는 함수
 function getPage(event) {
   content.innerHTML = "";
   let pageBtn = event.target.innerHTML;
   let onNum = document.querySelector(".on");
-  // let hideNum = document.getElementsByClassName("hide");
   onNum.classList.remove("on");
 
   if (pageBtn === `&lt;` || pageBtn === `처음으로`) {
@@ -211,5 +223,5 @@ function logOut() {
   window.location.href = "main.html";
 }
 
-searchBtn[0].addEventListener("click", displayJson);
+searchBtn[0].addEventListener("click", searchDong);
 logoutBtn[0].addEventListener("click", logOut);
