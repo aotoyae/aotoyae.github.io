@@ -39,15 +39,46 @@ function firstPage() {
 
 firstPage();
 
+function searchDong() {
+  content.innerHTML = "";
+  console.log(searchBox.value);
+  fetch(`${url}&perPage=4793&serviceKey=${key}&page=${page}`)
+    .then((response) => response.json())
+    .then((json) => {
+      let dongData = json.data;
+      dongData
+        .filter((ele) => ele.읍면동명 === searchBox.value)
+        .forEach((ele) => {
+          content.innerHTML += `
+                          <tr>
+                          <td>${
+                            ele.법정동코드 !== null ? ele.법정동코드 : `-`
+                          }</td>
+                          <td>${ele.시도명 !== null ? ele.시도명 : `-`}</td>
+                          <td>${ele.시군구명 !== null ? ele.시군구명 : `-`}</td>
+                          <td>${ele.읍면동명 !== null ? ele.읍면동명 : `-`}</td>
+                          <td>${ele.리명 !== null ? ele.리명 : `-`}</td>
+                          <td>${ele.순위 !== null ? ele.순위 : `-`}</td>
+                          <td>${ele.생성일자 !== null ? ele.생성일자 : `-`}</td>
+                          <td>${ele.삭제일자 !== null ? ele.삭제일자 : `-`}</td>
+                          <td>${
+                            ele.과거법정동코드 !== null
+                              ? ele.과거법정동코드
+                              : `-`
+                          }</td>
+                          </tr>`;
+        });
+    })
+    .catch((error) => {
+      catchError(error);
+    });
+}
+
 // 법정동 리스트 가져와 보여주는 함수
 function displayJson(json) {
   let dongData = json.data;
-  if (searchBox.value.length !== 0) {
-    console.log(searchBox.value);
-    dongData
-      .filter((ele) => ele.읍면동명 === `동탄면`)
-      .forEach((ele) => {
-        content.innerHTML += `
+  dongData.forEach((ele) => {
+    content.innerHTML += `
                         <tr>
                         <td>${
                           ele.법정동코드 !== null ? ele.법정동코드 : `-`
@@ -63,27 +94,7 @@ function displayJson(json) {
                           ele.과거법정동코드 !== null ? ele.과거법정동코드 : `-`
                         }</td>
                         </tr>`;
-      });
-  } else {
-    dongData.forEach((ele) => {
-      content.innerHTML += `
-                        <tr>
-                        <td>${
-                          ele.법정동코드 !== null ? ele.법정동코드 : `-`
-                        }</td>
-                        <td>${ele.시도명 !== null ? ele.시도명 : `-`}</td>
-                        <td>${ele.시군구명 !== null ? ele.시군구명 : `-`}</td>
-                        <td>${ele.읍면동명 !== null ? ele.읍면동명 : `-`}</td>
-                        <td>${ele.리명 !== null ? ele.리명 : `-`}</td>
-                        <td>${ele.순위 !== null ? ele.순위 : `-`}</td>
-                        <td>${ele.생성일자 !== null ? ele.생성일자 : `-`}</td>
-                        <td>${ele.삭제일자 !== null ? ele.삭제일자 : `-`}</td>
-                        <td>${
-                          ele.과거법정동코드 !== null ? ele.과거법정동코드 : `-`
-                        }</td>
-                        </tr>`;
-    });
-  }
+  });
 }
 
 // 에러시 실행 함수
@@ -231,5 +242,5 @@ function logOut() {
   window.location.href = "main.html";
 }
 
-searchBtn[0].addEventListener("click", displayJson);
+searchBtn[0].addEventListener("click", searchDong);
 logoutBtn[0].addEventListener("click", logOut);
