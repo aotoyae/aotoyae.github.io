@@ -42,12 +42,14 @@ firstPage();
 function searchDong() {
   content.innerHTML = "";
   console.log(searchBox.value);
-  fetch(`${url}&perPage=${DEFAULT_PER_PAGE}&serviceKey=${key}&page=${page}`)
+  fetch(
+    `${url}q=${searchBox.value}&perPage=${DEFAULT_PER_PAGE}&serviceKey=${key}&page=${page}`
+  )
     .then((response) => response.json())
     .then((json) => {
       let dongData = json.data;
       dongData
-        .filter((ele) => ele.읍면동명 === searchBox.value)
+        // .filter((ele) => ele.읍면동명 === searchBox.value)
         .forEach((ele) => {
           content.innerHTML += `
                           <tr>
@@ -144,8 +146,7 @@ function lastPage() {
       let perPage = json.perPage; // 10
       let firstNumOfLastList = Math.floor(pageSize / perPage) * 10 + 1; // 4791
       let numOfLastList = pageSize % 10; // 3
-      const lastPageIdx = pageNumberBtn[numOfLastList - 1];
-
+      let lastPageIdx = pageNumberBtn[numOfLastList - 1];
       pageNumberBtn[numOfLastList - 1].classList.add("on");
       pageListNum = pageSize;
 
@@ -172,8 +173,8 @@ function getPage(event) {
   content.innerHTML = "";
   let pageBtn = event.target.innerHTML;
   let onNum = document.querySelector(".on");
-  let numOfLastList = pageSize % 10;
-  const lastPageIdx = pageNumberBtn[numOfLastList - 1];
+  let numOfLastList = pageSize % 10; // 3 >> 마지막 페이지 리스트 번호 찾는 변수
+  let lastPageIdx = pageNumberBtn[numOfLastList - 1];
 
   onNum.classList.remove("on");
 
@@ -187,18 +188,11 @@ function getPage(event) {
 
   if (pageBtn === `&gt;`) {
     pageList[2].classList.add("on");
-    if (Number(lastPageIdx.innerHTML) !== lastPageIdx + 1) {
-      pageListNum += 10;
-      for (let i = 0; i < 10; i++) {
-        pageNumberBtn[i].innerHTML = Number(pageNumberBtn[i].innerHTML) + 10;
-      }
-      moveList(pageListNum);
-    } else {
-      if (Number(onNum.innerHTML) === lastPage + 1) {
-        alert(`마지막 페이지입니다.`);
-      }
-      lastPage();
+    pageListNum += 10;
+    for (let i = 0; i < 10; i++) {
+      pageNumberBtn[i].innerHTML = Number(pageNumberBtn[i].innerHTML) + 10;
     }
+    moveList(pageListNum);
   } else if (pageBtn === `&lt;`) {
     pageList[2].classList.add("on");
     if (Number(pageNumberBtn[0].innerHTML) !== 1) {
