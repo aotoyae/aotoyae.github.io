@@ -77,7 +77,7 @@ function handleJoin(event) {
   alert(`${id}님 회원가입을 환영합니다.`);
 }
 
-function checkAccount() {
+function checkAccountIsValid() {
   const id = idBox.value;
   const password = passBox.value;
   const btoaPassword = btoa(password);
@@ -106,7 +106,7 @@ function checkAccount() {
 
 function handleLogIn(event) {
   event.preventDefault();
-  const accountIsValid = checkAccount();
+  const accountIsValid = checkAccountIsValid();
   const id = idBox.value;
 
   if (accountIsValid) {
