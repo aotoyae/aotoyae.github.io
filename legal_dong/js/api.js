@@ -149,14 +149,12 @@ function toPrevList() {
     alert(`첫 페이지입니다.`);
   }
   pageList[2].classList.add("on");
-
   if (Number(pageNumberBtn[0].innerHTML) !== 1) {
     pageListNum -= 10;
     for (let i = 0; i < 10; i++) {
       pageNumberBtn[i].innerHTML = Number(pageNumberBtn[i].innerHTML) - 10;
     }
   }
-
   fetch(`${urlWithPerPageAndKey}&page=${pageListNum}`)
     .then((response) => response.json())
     .then((json) => {
@@ -175,7 +173,7 @@ function toNextList() {
   pageList[2].classList.add("on");
   let firstNumOfLastList = Math.floor(pageSize / perPage) * 10 + 1; //4791
   let lastListLength = pageSize % 10; // 3
-  console.log(pageListNum);
+
   if (firstNumOfLastList < Number(pageNumberBtn[0].innerHTML) + 10) {
     toLastPage();
     return;
@@ -231,7 +229,7 @@ function showAllList() {
       pageNumberBtn[i].classList.remove("hide");
     }
   }
-  return true;
+  return;
 }
 
 function hideList(firstNumOfLastList, lastListLength) {
