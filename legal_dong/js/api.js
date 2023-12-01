@@ -14,6 +14,7 @@ const DEFAULT_PER_PAGE = 10;
 let pageListNum = 1;
 let pageSize = 0;
 let page = 1;
+let perPage = 10;
 
 const url = `https://api.odcloud.kr/api/15063424/v1/uddi:257e1510-0eeb-44de-8883-8295c94dadf7?`;
 const urlWithPerPageAndKey = `${url}&perPage=${DEFAULT_PER_PAGE}&serviceKey=${key}`;
@@ -38,6 +39,26 @@ function firstPage() {
 }
 
 firstPage();
+
+function toFirstPage() {
+  content.innerHTML = "";
+  pageListNum = 1;
+  let onNum = document.querySelector(".on");
+  onNum.classList.remove("on");
+  pageList[2].classList.add("on");
+
+  showAllList();
+
+  if (Number(onNum.innerHTML) === 1) {
+    alert(`첫 페이지입니다.`);
+  } else {
+    for (let i = 0; i < 10; i++) {
+      pageNumberBtn[i].innerHTML = 1;
+      pageNumberBtn[i].innerHTML = Number(pageNumberBtn[i].innerHTML) + i;
+    }
+  }
+  firstPage();
+}
 
 function searchDong() {
   content.innerHTML = "";
@@ -122,10 +143,62 @@ function pagingNum(pageBtn) {
     });
 }
 
-// > 클릭 시 이전,다음 페이지 목록으로 이동하는 함수
-function moveList(pageListNum) {
-  page = pageListNum;
-  fetch(`${urlWithPerPageAndKey}&page=${page}`)
+// 이전 페이지 리스트로 이동
+function toPrevList() {
+  content.innerHTML = "";
+  let onNum = document.querySelector(".on");
+  onNum.classList.remove("on");
+  let numOfLastList = pageSize % 10; // 3
+
+  const isHideList = showAllList();
+  if (isHideList) {
+    pageListNum -= numOfLastList - 1;
+  }
+
+  if (Number(onNum.innerHTML) === 1) {
+    alert(`첫 페이지입니다.`);
+  }
+  pageList[2].classList.add("on");
+
+  if (Number(pageNumberBtn[0].innerHTML) !== 1) {
+    pageListNum -= 10;
+    for (let i = 0; i < 10; i++) {
+      pageNumberBtn[i].innerHTML = Number(pageNumberBtn[i].innerHTML) - 10;
+    }
+  }
+
+  fetch(`${urlWithPerPageAndKey}&page=${pageListNum}`)
+    .then((response) => response.json())
+    .then((json) => {
+      displayJson(json);
+    })
+    .catch((error) => {
+      catchError(error);
+    });
+}
+
+// 이후 페이지 리스트로 이동
+function toNextList() {
+  content.innerHTML = "";
+  let onNum = document.querySelector(".on");
+  onNum.classList.remove("on");
+  pageList[2].classList.add("on");
+  let firstNumOfLastList = Math.floor(pageSize / perPage) * 10 + 1; //4791
+  let lastListLength = pageSize % 10; // 3
+  console.log(pageListNum);
+  if (firstNumOfLastList < Number(pageNumberBtn[0].innerHTML) + 10) {
+    toLastPage();
+    return;
+  } else if (firstNumOfLastList !== Number(pageNumberBtn[0].innerHTML) + 10) {
+    pageListNum += 10;
+    for (let i = 0; i < 10; i++) {
+      pageNumberBtn[i].innerHTML = Number(pageNumberBtn[i].innerHTML) + 10;
+    }
+  } else {
+    hideList(firstNumOfLastList, lastListLength);
+  }
+
+  fetch(`${urlWithPerPageAndKey}&page=${pageListNum}`)
     .then((response) => response.json())
     .then((json) => {
       displayJson(json);
@@ -136,36 +209,50 @@ function moveList(pageListNum) {
 }
 
 // 마지막 페이지로 이동하는 함수
-function lastPage() {
+function toLastPage() {
+  content.innerHTML = "";
+  let onNum = document.querySelector(".on");
+  if (Number(onNum.innerHTML) !== pageSize) onNum.classList.remove("on");
+
+  let firstNumOfLastList = Math.floor(pageSize / perPage) * 10 + 1; // 4791
+  let lastListLength = pageSize % 10; // 3
+  pageNumberBtn[lastListLength - 1].classList.add("on");
+  pageListNum = pageSize;
+
+  if (Number(onNum.innerHTML) === pageSize) {
+    alert(`마지막 페이지입니다.`);
+  } else {
+    hideList(firstNumOfLastList, lastListLength);
+  }
+
   fetch(`${url}page=${pageSize}&perPage=${DEFAULT_PER_PAGE}&&serviceKey=${key}`)
     .then((response) => response.json())
     .then((json) => {
       displayJson(json);
-
-      pageSize = Math.ceil(json.totalCount / DEFAULT_PER_PAGE); // 4793
-      let perPage = json.perPage; // 10
-      let firstNumOfLastList = Math.floor(pageSize / perPage) * 10 + 1; // 4791
-      let numOfLastList = pageSize % 10; // 3
-      let lastPageIdx = pageNumberBtn[numOfLastList - 1];
-      pageNumberBtn[numOfLastList - 1].classList.add("on");
-      pageListNum = pageSize;
-
-      if (Number(lastPageIdx.innerHTML) === pageSize) {
-        alert(`마지막 페이지입니다.`);
-      } else {
-        for (let i = 0; i < 10; i++) {
-          pageNumberBtn[i].innerHTML = firstNumOfLastList;
-          pageNumberBtn[i].innerHTML = Number(pageNumberBtn[i].innerHTML) + i;
-        }
-
-        for (j = numOfLastList; j < 10; j++) {
-          pageNumberBtn[j].classList.add("hide");
-        }
-      }
     })
     .catch((error) => {
       catchError(error);
     });
+}
+
+function showAllList() {
+  for (i = 0; i < 10; i++) {
+    if (pageNumberBtn[i].classList.contains("hide")) {
+      pageNumberBtn[i].classList.remove("hide");
+    }
+  }
+  return true;
+}
+
+function hideList(firstNumOfLastList, lastListLength) {
+  for (let i = 0; i < 10; i++) {
+    pageNumberBtn[i].innerHTML = firstNumOfLastList;
+    pageNumberBtn[i].innerHTML = Number(pageNumberBtn[i].innerHTML) + i;
+  }
+
+  for (j = lastListLength; j < 10; j++) {
+    pageNumberBtn[j].classList.add("hide");
+  }
 }
 
 // 각 페이지 이동 함수를 실행하는 함수
@@ -173,62 +260,15 @@ function getPage(event) {
   content.innerHTML = "";
   let pageBtn = event.target.innerHTML;
   let onNum = document.querySelector(".on");
-  let numOfLastList = pageSize % 10; // 3 >> 마지막 페이지 리스트 번호 찾는 변수
-  let lastPageIdx = pageNumberBtn[numOfLastList - 1];
-
   onNum.classList.remove("on");
 
-  if (pageBtn === `&lt;` || pageBtn === `처음으로`) {
-    for (i = 0; i < 10; i++) {
-      if (pageNumberBtn[i].classList.contains("hide")) {
-        pageNumberBtn[i].classList.remove("hide");
-      }
-    }
-  }
-
-  if (pageBtn === `&gt;`) {
-    pageList[2].classList.add("on");
-    pageListNum += 10;
-    for (let i = 0; i < 10; i++) {
-      pageNumberBtn[i].innerHTML = Number(pageNumberBtn[i].innerHTML) + 10;
-    }
-    moveList(pageListNum);
-  } else if (pageBtn === `&lt;`) {
-    pageList[2].classList.add("on");
-    if (Number(pageNumberBtn[0].innerHTML) !== 1) {
-      pageListNum -= 10;
-      for (let i = 0; i < 10; i++) {
-        pageNumberBtn[i].innerHTML = Number(pageNumberBtn[i].innerHTML) - 10;
-      }
-      moveList(pageListNum);
-    } else {
-      if (Number(onNum.innerHTML) === 1) {
-        alert(`첫 페이지입니다.`);
-      }
-      firstPage();
-    }
-  } else if (pageBtn === `처음으로`) {
-    pageList[2].classList.add("on");
-    if (Number(onNum.innerHTML) === 1) {
-      alert(`첫 페이지입니다.`);
-    } else {
-      for (let i = 0; i < 10; i++) {
-        pageNumberBtn[i].innerHTML = 1;
-        pageNumberBtn[i].innerHTML = Number(pageNumberBtn[i].innerHTML) + i;
-      }
-    }
-    firstPage();
-  } else if (pageBtn === `마지막으로`) {
-    lastPage();
-  } else {
-    event.target.classList.add("on");
-    pagingNum(pageBtn);
-  }
+  event.target.classList.add("on");
+  pagingNum(pageBtn);
 }
 
-if (pageList.length > 0) {
-  for (let i = 0; i < pageList.length; i++) {
-    pageList[i].addEventListener("click", getPage);
+if (pageNumberBtn.length > 0) {
+  for (let i = 0; i < pageNumberBtn.length; i++) {
+    pageNumberBtn[i].addEventListener("click", getPage);
   }
 }
 
@@ -238,3 +278,7 @@ function logOut() {
 
 searchBtn[0].addEventListener("click", searchDong);
 logoutBtn[0].addEventListener("click", logOut);
+firstBtn[0].addEventListener("click", toFirstPage);
+prevBtn[0].addEventListener("click", toPrevList);
+nextBtn[0].addEventListener("click", toNextList);
+lastBtn[0].addEventListener("click", toLastPage);
