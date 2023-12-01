@@ -63,14 +63,13 @@ function toFirstPage() {
 function searchDong() {
   content.innerHTML = "";
   console.log(searchBox.value);
-  fetch(
-    `${url}q=${searchBox.value}&perPage=${DEFAULT_PER_PAGE}&serviceKey=${key}&page=${page}`
-  )
+  fetch(`${url}&perPage=${DEFAULT_PER_PAGE}&serviceKey=${key}&page=${page}`)
     .then((response) => response.json())
     .then((json) => {
       let dongData = json.data;
       dongData
         // .filter((ele) => ele.읍면동명 === searchBox.value)
+        .filter((ele) => ele.읍면동명 === `동탄면`)
         .forEach((ele) => {
           content.innerHTML += `
                           <tr>
