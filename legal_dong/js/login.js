@@ -46,31 +46,38 @@ function handleJoin(event) {
   const btoaPassword = btoa(password);
 
   if (
-    id === "" ||
-    checkIdIsInvalid(id) ||
-    password === "" ||
-    checkPwIsInvalid(password)
+      id === "" ||
+      checkIdIsInvalid(id) ||
+      password === "" ||
+      checkPwIsInvalid(password)
   ) {
     alertInputIsInvalid();
     return;
   }
 
   let accountData = JSON.parse(localStorage.getItem("users"));
+  const isDuplicated = checkIsDuplicated(id, accountData);
 
   if (accountData === null) {
     accountData = [];
   }
 
+  if (!isDuplicated) {
+    accountData.push({ id: id, password: btoaPassword });
+    localStorage.setItem("users", JSON.stringify(accountData));
+    alert(`${id}님 회원가입을 환영합니다.`);
+  }
+}
+
+function checkIsDuplicated(id, accountData) {
   for (const user of accountData) {
     if (id === user.id) {
       alert(`사용할 수 없는 아이디입니다. 다른 아이디를 입력해 주세요.`);
-      return;
+      return true;
     }
   }
 
-  accountData.push({ id: id, password: btoaPassword });
-  localStorage.setItem("users", JSON.stringify(accountData));
-  alert(`${id}님 회원가입을 환영합니다.`);
+  return false;
 }
 
 function checkAccountIsValid() {
@@ -79,10 +86,10 @@ function checkAccountIsValid() {
   const btoaPassword = btoa(password);
 
   if (
-    id === "" ||
-    checkIdIsInvalid(id) ||
-    password === "" ||
-    checkPwIsInvalid(password)
+      id === "" ||
+      checkIdIsInvalid(id) ||
+      password === "" ||
+      checkPwIsInvalid(password)
   ) {
     alertInputIsInvalid();
     return;
@@ -96,7 +103,7 @@ function checkAccountIsValid() {
   }
 
   return accountData.some(
-    (obj) => obj.id === id && obj.password === btoaPassword
+      (obj) => obj.id === id && obj.password === btoaPassword
   );
 }
 
