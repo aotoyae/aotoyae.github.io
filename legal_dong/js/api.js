@@ -120,16 +120,6 @@ function displayJson(json) {
   });
 }
 
-// 에러시 실행 함수
-function catchError(error) {
-  console.log(error);
-  document.querySelector("#content").innerHTML += `
-              <tr>
-                  <td colspan="4">Error occurred.</td>
-              </tr>   
-            `;
-}
-
 // 숫자 클릭 시 페이지 이동하는 함수
 function pagingNum(pageBtn) {
   page = pageBtn;
@@ -253,6 +243,16 @@ function hideList(firstNumOfLastList, lastListLength) {
   for (j = lastListLength; j < 10; j++) {
     pageNumberBtn[j].classList.add("hide");
   }
+}
+
+// 에러시 실행 함수
+function catchError(error) {
+  console.log(error);
+  document.querySelector("#content").innerHTML += `
+              <tr>
+                  <td colspan="4">Error occurred.</td>
+              </tr>   
+            `;
 }
 
 // 각 페이지 이동 함수를 실행하는 함수
