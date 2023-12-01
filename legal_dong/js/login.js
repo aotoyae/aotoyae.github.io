@@ -7,9 +7,7 @@ const lowerRule = /[a-z]/;
 const upperRule = /[A-Z]/;
 
 function checkIdIsValid(id) {
-  return (
-    !numRule.test(id) || !lowerRule.test(id) || 20 < id.length || id.length < 5
-  );
+  return !numRule.test(id) || !lowerRule.test(id) || 20 < id.length || id.length < 5;
 }
 
 function checkPwIsValid(password) {
