@@ -68,7 +68,6 @@ function searchDong() {
     .then((json) => {
       let dongData = json.data;
       dongData
-        // .filter((ele) => ele.읍면동명 === searchBox.value)
         .filter((ele) => ele.읍면동명 === `동탄면`)
         .forEach((ele) => {
           content.innerHTML += `
