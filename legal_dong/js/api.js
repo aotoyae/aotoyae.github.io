@@ -219,6 +219,7 @@ function toLastPage() {
     .catch((error) => {
       catchError(error);
     });
+  pageListNum -= lastListLength - 1;
 }
 
 function showAllList() {
