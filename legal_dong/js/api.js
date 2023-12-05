@@ -175,6 +175,10 @@ function toNextList() {
   if (firstNumOfLastList < Number(pageNumberBtn[0].innerHTML) + 10) {
     toLastPage();
     return;
+  } else if (pageSize === Number(onNum.innerHTML)) {
+    alert(`마지막 페이지입니다.`);
+    toLastPage();
+    return;
   } else if (firstNumOfLastList !== Number(pageNumberBtn[0].innerHTML) + 10) {
     pageListNum += 10;
     for (let i = 0; i < 10; i++) {
