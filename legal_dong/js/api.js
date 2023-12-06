@@ -172,11 +172,13 @@ function toNextList() {
   let firstNumOfLastList = Math.floor(pageSize / perPage) * 10 + 1; //4791
   let lastListLength = pageSize % 10; // 3
 
-  if (firstNumOfLastList < Number(pageNumberBtn[0].innerHTML) + 10) {
+  if (pageSize === Number(onNum.innerHTML)) {
+    alert(`마지막 페이지입니다.`);
     toLastPage();
     return;
-  } else if (pageSize === Number(onNum.innerHTML)) {
-    alert(`마지막 페이지입니다.`);
+  }
+
+  if (firstNumOfLastList < Number(pageNumberBtn[0].innerHTML) + 10) {
     toLastPage();
     return;
   } else if (firstNumOfLastList !== Number(pageNumberBtn[0].innerHTML) + 10) {
