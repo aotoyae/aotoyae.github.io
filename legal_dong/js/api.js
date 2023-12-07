@@ -11,9 +11,9 @@ const logoutBtn = document.getElementsByClassName("logout-btn");
 const key = api.key;
 
 const DEFAULT_PER_PAGE = 10;
+let page = 1;
 let pageListNum = 1;
 let pageSize = 0;
-let page = 1;
 let perPage = 10;
 
 const url = `https://api.odcloud.kr/api/15063424/v1/uddi:257e1510-0eeb-44de-8883-8295c94dadf7?`;
@@ -30,8 +30,6 @@ function firstPage() {
       // console.log(json.currentCount); // 10
       // console.log(json.totalCount); // 47921
       // console.log(pageSize); // 4793
-      // console.log(json.page); // 1
-      // console.log(json.perPage); // 10
     })
     .catch((error) => {
       catchError(error);
