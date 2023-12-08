@@ -56,11 +56,12 @@ function handleJoin(event) {
   }
 
   let accountData = JSON.parse(localStorage.getItem("users"));
-  const isDuplicated = checkIsDuplicated(id, accountData);
 
   if (accountData === null) {
     accountData = [];
   }
+
+  const isDuplicated = checkIsDuplicated(id, accountData);
 
   if (!isDuplicated) {
     accountData.push({ id: id, password: btoaPassword });
