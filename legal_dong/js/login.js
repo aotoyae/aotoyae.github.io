@@ -97,15 +97,21 @@ function checkAccountIsValid() {
   }
 
   let accountData = JSON.parse(localStorage.getItem("users"));
+  const noAccount = checkAccountExist(accountData);
 
-  if (accountData.length === 0) {
-    alert(`회원가입을 진행해 주세요.`);
-    return;
+  if (!noAccount) {
+    return accountData.some(
+        (obj) => obj.id === id && obj.password === btoaPassword
+    );
   }
+}
 
-  return accountData.some(
-      (obj) => obj.id === id && obj.password === btoaPassword
-  );
+function checkAccountExist(accountData) {
+  if (accountData === null) {
+    alert(`회원가입을 진행해 주세요.`);
+    return true;
+  }
+  return false;
 }
 
 function handleLogIn(event) {
