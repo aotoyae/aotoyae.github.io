@@ -85,6 +85,11 @@ function checkAccountIsValid() {
   const id = idBox.value;
   const password = passBox.value;
   const btoaPassword = btoa(password);
+  const processType = {
+    SUCCEED: `SUCCEED`,
+    INVALID: `INVALID`,
+    FAILED: `FAILED`,
+  };
 
   if (
       id === "" ||
@@ -93,7 +98,7 @@ function checkAccountIsValid() {
       checkPwIsInvalid(password)
   ) {
     alertInputIsInvalid();
-    return;
+    return processType.INVALID;
   }
 
   let accountData = JSON.parse(localStorage.getItem("users"));
@@ -102,7 +107,9 @@ function checkAccountIsValid() {
   if (!noAccount) {
     return accountData.some(
         (obj) => obj.id === id && obj.password === btoaPassword
-    );
+    )
+        ? processType.SUCCEED
+        : processType.FAILED;
   }
 }
 
@@ -118,11 +125,11 @@ function handleLogIn(event) {
   event.preventDefault();
   const accountIsValid = checkAccountIsValid();
   const id = idBox.value;
-
-  if (accountIsValid) {
+  console.log(accountIsValid);
+  if (accountIsValid === `SUCCEED`) {
     alert(`${id}님 반갑습니다.`);
     window.location.href = "sub.html";
-  } else if (accountIsValid === false) {
+  } else if (accountIsValid === `FAILED`) {
     alert(`아이디 또는 비밀번호를 잘못 입력했습니다.`);
   }
 }
