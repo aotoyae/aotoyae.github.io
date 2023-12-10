@@ -135,8 +135,8 @@ function toPrevList() {
   let onNum = document.querySelector(".on");
   onNum.classList.remove("on");
   let numOfLastList = pageSize % 10; // 3
-
   const isHideList = showAllList();
+
   if (isHideList) {
     pageListNum -= numOfLastList - 1;
   }
@@ -232,7 +232,6 @@ function showAllList() {
       pageNumberBtn[i].classList.remove("hide");
     }
   }
-  return;
 }
 
 function hideList(firstNumOfLastList, lastListLength) {
