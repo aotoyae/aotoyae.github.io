@@ -58,40 +58,65 @@ function toFirstPage() {
   firstPage();
 }
 
-function searchDong() {
-  content.innerHTML = "";
-  console.log(searchBox.value);
-  fetch(`${url}&perPage=4000&serviceKey=${key}&page=${page}`)
-    .then((response) => response.json())
-    .then((json) => {
-      let dongData = json.data;
-      dongData
-        .filter((ele) => ele.읍면동명 === `서면`)
-        .forEach((ele) => {
-          content.innerHTML += `
-                          <tr>
-                          <td>${
-                            ele.법정동코드 !== null ? ele.법정동코드 : `-`
-                          }</td>
-                          <td>${ele.시도명 !== null ? ele.시도명 : `-`}</td>
-                          <td>${ele.시군구명 !== null ? ele.시군구명 : `-`}</td>
-                          <td>${ele.읍면동명 !== null ? ele.읍면동명 : `-`}</td>
-                          <td>${ele.리명 !== null ? ele.리명 : `-`}</td>
-                          <td>${ele.순위 !== null ? ele.순위 : `-`}</td>
-                          <td>${ele.생성일자 !== null ? ele.생성일자 : `-`}</td>
-                          <td>${ele.삭제일자 !== null ? ele.삭제일자 : `-`}</td>
-                          <td>${
-                            ele.과거법정동코드 !== null
-                              ? ele.과거법정동코드
-                              : `-`
-                          }</td>
-                          </tr>`;
-        });
-    })
-    .catch((error) => {
-      catchError(error);
-    });
+// 검색 기능 test
+let searchedDataArr = [];
+
+async function searchDong() {
+  const totalPage = 4793;
+
+  try {
+    for (let pageNum = 1; pageNum <= totalPage; pageNum++) {
+      const response = await fetch(`${urlWithPerPageAndKey}&page=${pageNum}`);
+
+      if (!response.ok) {
+        throw new Error(`데이터 가져오는 데 ERROR 발생`);
+      }
+
+      const data = await response.json();
+      searchedDataArr = searchedDataArr.concat(data);
+    }
+    // console.log(searchedDataArr);
+  } catch (error) {
+    console.error(`데이터를 가져오는 중 ERROR 발생`, error);
+  }
+  console.log(searchedDataArr);
 }
+
+// function searchDong() {
+//   content.innerHTML = "";
+//   console.log(searchBox.value);
+//   fetch(`${url}&읍면동명=${searchBox.value}&perPage=20&serviceKey=${key}`)
+//     .then((response) => response.json())
+//     .then((json) => {
+//       let dongData = json.data;
+//       console.log(dongData);
+//       dongData
+//         // .filter((ele) => ele.읍면동명 === `소하읍`)
+//         .forEach((ele) => {
+//           content.innerHTML += `
+//                           <tr>
+//                           <td>${
+//                             ele.법정동코드 !== null ? ele.법정동코드 : `-`
+//                           }</td>
+//                           <td>${ele.시도명 !== null ? ele.시도명 : `-`}</td>
+//                           <td>${ele.시군구명 !== null ? ele.시군구명 : `-`}</td>
+//                           <td>${ele.읍면동명 !== null ? ele.읍면동명 : `-`}</td>
+//                           <td>${ele.리명 !== null ? ele.리명 : `-`}</td>
+//                           <td>${ele.순위 !== null ? ele.순위 : `-`}</td>
+//                           <td>${ele.생성일자 !== null ? ele.생성일자 : `-`}</td>
+//                           <td>${ele.삭제일자 !== null ? ele.삭제일자 : `-`}</td>
+//                           <td>${
+//                             ele.과거법정동코드 !== null
+//                               ? ele.과거법정동코드
+//                               : `-`
+//                           }</td>
+//                           </tr>`;
+//         });
+//     })
+//     .catch((error) => {
+//       catchError(error);
+//     });
+// }
 
 // 법정동 리스트 가져와 보여주는 함수
 function displayJson(json) {
