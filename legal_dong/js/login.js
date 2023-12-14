@@ -5,15 +5,22 @@ const loginBtn = document.getElementsByClassName("login-btn");
 const numRule = /[0-9]/;
 const lowerRule = /[a-z]/;
 const upperRule = /[A-Z]/;
+const idAllowRule = /^[a-z0-9]*$/;
+const pwAllowRule = /^[a-zA-Z0-9]*$/;
 
 function checkIdIsInvalid(id) {
-  return !numRule.test(id) || !lowerRule.test(id) || 20 < id.length || id.length < 5;
+  return !numRule.test(id) ||
+    !lowerRule.test(id) ||
+    !idAllowRule.test(id) ||
+    20 < id.length ||
+    id.length < 5;
 }
 
 function checkPwIsInvalid(password) {
   return !numRule.test(password) ||
     !lowerRule.test(password) ||
     !upperRule.test(password) ||
+    !pwAllowRule.test(password) ||
     20 < password.length ||
     password.length < 8;
 }
@@ -46,10 +53,10 @@ function handleJoin(event) {
   const btoaPassword = btoa(password);
 
   if (
-      id === "" ||
-      checkIdIsInvalid(id) ||
-      password === "" ||
-      checkPwIsInvalid(password)
+    id === "" ||
+    checkIdIsInvalid(id) ||
+    password === "" ||
+    checkPwIsInvalid(password)
   ) {
     alertInputIsInvalid();
     return;
@@ -92,10 +99,10 @@ function checkAccountIsValid() {
   };
 
   if (
-      id === "" ||
-      checkIdIsInvalid(id) ||
-      password === "" ||
-      checkPwIsInvalid(password)
+    id === "" ||
+    checkIdIsInvalid(id) ||
+    password === "" ||
+    checkPwIsInvalid(password)
   ) {
     alertInputIsInvalid();
     return processType.INVALID;
@@ -106,10 +113,10 @@ function checkAccountIsValid() {
 
   if (!noAccount) {
     return accountData.some(
-        (obj) => obj.id === id && obj.password === btoaPassword
+      (obj) => obj.id === id && obj.password === btoaPassword
     )
-        ? processType.SUCCEED
-        : processType.FAILED;
+      ? processType.SUCCEED
+      : processType.FAILED;
   }
 }
 
