@@ -8,8 +8,8 @@ const lastBtn = document.getElementsByClassName("last");
 const searchBox = document.getElementById("search-box");
 const searchBtn = document.getElementsByClassName("search-btn");
 const logoutBtn = document.getElementsByClassName("logout-btn");
-const key = api.key;
 
+const key = api.key;
 const DEFAULT_PER_PAGE = 10;
 let page = 1;
 let pageListNum = 1;
@@ -27,9 +27,6 @@ function firstPage() {
     .then((json) => {
       pageSize = Math.ceil(json.totalCount / DEFAULT_PER_PAGE);
       displayJson(json);
-      // console.log(json.currentCount); // 10
-      // console.log(json.totalCount); // 47921
-      // console.log(pageSize); // 4793
     })
     .catch((error) => {
       catchError(error);
