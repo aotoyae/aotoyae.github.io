@@ -17,7 +17,7 @@ let pageSize = 0;
 let perPage = 10;
 
 const url = `https://api.odcloud.kr/api/15063424/v1/uddi:257e1510-0eeb-44de-8883-8295c94dadf7?`;
-const urlWithPerPageAndKey = `${url}&perPage=${DEFAULT_PER_PAGE}&serviceKey=${key}`;
+const urlWithPerPageAndKey = `${url}&perPage=${DEFAULT_PER_PAGE}&&serviceKey=${key}`;
 const fullUrl = `${urlWithPerPageAndKey}&page=${page}`;
 
 // 처음 페이지로 이동하는 함수
