@@ -83,41 +83,41 @@ function toFirstPage() {
 //   console.log(searchedDataArr);
 // }
 
-function searchDong() {
-  content.innerHTML = "";
-  console.log(searchBox.value);
-  fetch(`${url}&perPage=20&serviceKey=${key}`)
-    .then((response) => response.json())
-    .then((json) => {
-      let dongData = json.data;
-      console.log(dongData);
-      dongData
-        .filter((ele) => ele.읍면동명 === `소하읍`)
-        .forEach((ele) => {
-          content.innerHTML += `
-                          <tr>
-                          <td>${
-                            ele.법정동코드 !== null ? ele.법정동코드 : `-`
-                          }</td>
-                          <td>${ele.시도명 !== null ? ele.시도명 : `-`}</td>
-                          <td>${ele.시군구명 !== null ? ele.시군구명 : `-`}</td>
-                          <td>${ele.읍면동명 !== null ? ele.읍면동명 : `-`}</td>
-                          <td>${ele.리명 !== null ? ele.리명 : `-`}</td>
-                          <td>${ele.순위 !== null ? ele.순위 : `-`}</td>
-                          <td>${ele.생성일자 !== null ? ele.생성일자 : `-`}</td>
-                          <td>${ele.삭제일자 !== null ? ele.삭제일자 : `-`}</td>
-                          <td>${
-                            ele.과거법정동코드 !== null
-                              ? ele.과거법정동코드
-                              : `-`
-                          }</td>
-                          </tr>`;
-        });
-    })
-    .catch((error) => {
-      catchError(error);
-    });
-}
+// function searchDong() {
+//   content.innerHTML = "";
+//   console.log(searchBox.value);
+//   fetch(`${url}&perPage=20&serviceKey=${key}`)
+//     .then((response) => response.json())
+//     .then((json) => {
+//       let dongData = json.data;
+//       console.log(dongData);
+//       dongData
+//         .filter((ele) => ele.읍면동명 === `소하읍`)
+//         .forEach((ele) => {
+//           content.innerHTML += `
+//                           <tr>
+//                           <td>${
+//                             ele.법정동코드 !== null ? ele.법정동코드 : `-`
+//                           }</td>
+//                           <td>${ele.시도명 !== null ? ele.시도명 : `-`}</td>
+//                           <td>${ele.시군구명 !== null ? ele.시군구명 : `-`}</td>
+//                           <td>${ele.읍면동명 !== null ? ele.읍면동명 : `-`}</td>
+//                           <td>${ele.리명 !== null ? ele.리명 : `-`}</td>
+//                           <td>${ele.순위 !== null ? ele.순위 : `-`}</td>
+//                           <td>${ele.생성일자 !== null ? ele.생성일자 : `-`}</td>
+//                           <td>${ele.삭제일자 !== null ? ele.삭제일자 : `-`}</td>
+//                           <td>${
+//                             ele.과거법정동코드 !== null
+//                               ? ele.과거법정동코드
+//                               : `-`
+//                           }</td>
+//                           </tr>`;
+//         });
+//     })
+//     .catch((error) => {
+//       catchError(error);
+//     });
+// }
 
 // 법정동 리스트 가져와 보여주는 함수
 function displayJson(json) {
