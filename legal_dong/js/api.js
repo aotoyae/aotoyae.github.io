@@ -6,7 +6,7 @@ const prevBtn = document.getElementsByClassName("prev");
 const nextBtn = document.getElementsByClassName("next");
 const lastBtn = document.getElementsByClassName("last");
 const searchBox = document.getElementById("search-box");
-const searchBtn = document.getElementsByClassName("search-btn");
+// const searchBtn = document.getElementsByClassName("search-btn");
 const logoutBtn = document.getElementsByClassName("logout-btn");
 
 const key = api.key;
@@ -299,7 +299,7 @@ function logOut() {
   window.location.href = "main.html";
 }
 
-searchBtn[0].addEventListener("click", searchDong);
+// searchBtn[0].addEventListener("click", searchDong);
 logoutBtn[0].addEventListener("click", logOut);
 firstBtn[0].addEventListener("click", toFirstPage);
 prevBtn[0].addEventListener("click", toPrevList);
